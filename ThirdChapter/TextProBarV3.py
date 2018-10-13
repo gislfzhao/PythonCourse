@@ -10,5 +10,5 @@ for i in range(scale + 1):
     c = (i / scale) * 100
     dur = time.perf_counter() - start
     print("\r{:^3.0f}%[{}->{}]{:.2f}s".format(c, a, b, dur), end='')
-    time.sleep(0.2)
-print("执行结束".center(scale//2, "-"))
+    time.sleep(0.01)
+print("\n执行结束".center(scale//2, "-"))
