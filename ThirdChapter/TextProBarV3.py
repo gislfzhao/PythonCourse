@@ -12,3 +12,4 @@ for i in range(scale + 1):
     print("\r{:^3.0f}%[{}->{}]{:.2f}s".format(c, a, b, dur), end='')
     time.sleep(0.05)
 print("\n"+"执行结束".center(scale//2, "-"))
+print()
