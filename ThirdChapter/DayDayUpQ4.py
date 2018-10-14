@@ -9,7 +9,7 @@ def day_up(df):
     return dayup
 
 
-dayfactor = 0.001
+dayfactor = 0.01
 while day_up(dayfactor) < 37.78:
     dayfactor += 0.001
-print("工作日的努力参数是：{:.3f}".format(dayfactor))
+print("工作日的努力参数是:{:.3f}".format(dayfactor))
