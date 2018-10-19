@@ -14,6 +14,10 @@ def skip(step):
 # 画表盘
 def draw_clock(radius):
     reset()  # 将乌龟返回初始位置
+    # pendown()
+    # # dot(20, "red")
+    # circle(10)
+    # penup()
     pensize(7)
     for i in range(60):
         skip(radius)
@@ -29,14 +33,14 @@ def draw_clock(radius):
 def mk_hand(name, length):
     reset()
     skip(-length * 0.1)
-    begin_poly()
+    begin_poly()    # 开始记录多边形的顶点
     forward(length * 1.1)
-    end_poly()
-    hand_form = get_poly()
+    end_poly()  # 停止记录多边形的顶点
+    hand_form = get_poly()      # 返回记录的多边形
     '''''
     begin_poly -- 开始记录，end_poly -- 结束记录,get_poly -- 绘画记录点
     '''
-    register_shape(name, hand_form)  # 给handForm形状起名
+    register_shape(name, hand_form)  # 给hand_form形状起名,注册一个图形
 
 
 def init():
@@ -49,11 +53,12 @@ def init():
     logo    :    向上（朝北）  顺时针
     world -- 自定义
     '''
+
     mk_hand("secHand", 125)
     mk_hand("minHand", 130)
     mk_hand("hurHand", 90)
     secHand = Turtle()
-    secHand.shape("secHand")  # 对于该turtle变量赋值形状
+    secHand.shape("secHand")  # 对于该turtle变量赋值形状(设置turtle的形状，默认为classic), 绘制图形
     minHand = Turtle()  # 创建一个新的Turtle实例对象
     minHand.shape("minHand")
     hurHand = Turtle()
@@ -64,6 +69,7 @@ def init():
     printer = Turtle()
     printer2 = Turtle()
     printer.hideturtle()  # 隐藏箭头
+    printer2.hideturtle()
     printer.penup()
 
 
@@ -96,11 +102,11 @@ def tick():
     minHand.setheading(6 * minute)
     hurHand.setheading(30 * hour)
     tracer(False)
+    printer.hideturtle()
     printer.forward(65)  # 前进65写星期
     printer.write(week(t), align="center", font=("Courier", 14, "bold"))
     printer.back(130)  # 退后130写日期
-    printer.write(date(t), align="center", font=("Courier", 14, "bold"))
-    printer2.hideturtle()
+    printer.write(date(t), align="center", font=("Arial", 16, "normal"))
     printer2.penup()
     printer2.clear()
     printer2.back(110)  # 退后30写时间
@@ -116,6 +122,7 @@ def main():
     tracer(False)  # 关闭绘画追踪，可以用于加速绘画复杂图形
     init()
     draw_clock(160)
+    hideturtle()    # 隐藏turtle的形状
     tracer(True)
     tick()
     mainloop()  # mainloop则是主窗口的成员函数， 不会响应鼠标事件,与done()函数相对应
