@@ -36,18 +36,18 @@ def draw_digit(digit):  # draw the digit
 def draw_date(date):    # draw the digits of date
     for i in date:
         if i == '-':
-            turtle.forward(10)
-            turtle.write('年', False, 'left', ("Arial", 36, "normal"))
+            turtle.forward(20)
+            turtle.write('年', False, 'center', ("Arial", 36, "normal"))
             turtle.pencolor("green")
             turtle.forward(20)
         elif i == '+':
-            turtle.forward(10)
-            turtle.write('月', False, 'left', ("Arial", 36, "normal"))
+            turtle.forward(20)
+            turtle.write('月', False, 'center', ("Arial", 36, "normal"))
             turtle.pencolor("blue")
             turtle.forward(20)
         elif i == '=':
-            turtle.forward(10)
-            turtle.write('日', False, 'left', ("Arial", 36, "normal"))
+            turtle.forward(20)
+            turtle.write('日', False, 'center', ("Arial", 36, "normal"))
         else:
             draw_digit(i)
 

@@ -57,7 +57,7 @@ def init():
     mk_hand("secHand", 125)
     mk_hand("minHand", 130)
     mk_hand("hurHand", 90)
-    secHand = Turtle()
+    secHand = Turtle()  # 类似于secHand = turtle (import turtle)，也是创建新的Turtle实例对象
     secHand.shape("secHand")  # 对于该turtle变量赋值形状(设置turtle的形状，默认为classic), 绘制图形
     minHand = Turtle()  # 创建一个新的Turtle实例对象
     minHand.shape("minHand")
