@@ -1,15 +1,15 @@
-# Calculate Water Margin
+# Statistics Text
 import jieba
 
 
-def get_text():
-    txt = open("WaterMargin.txt", "r", encoding="utf-8").read()
+def get_text(path, filename):
+    txt = open(path + filename, "r", encoding="ANSI").read()
     return txt
 
 
-def output_words_info(words):
-    output_name = "watermargin_words_info.txt"
-    txt = open(output_name, "w", encoding="utf-8")
+def output_words_info(words, path, filename):
+    output_name = path + filename.split(".")[0] + "_statistics.txt"
+    txt = open(output_name, "w", encoding="ANSI")
     for word in words:
         txt.write("{:<}:{:>5}\n".format(word[0], word[1]))
     txt.close()
@@ -19,11 +19,10 @@ def stat_words(txt):
     words = jieba.lcut(txt)
     counts = {}
     for word in words:
-        if len(word) == 1:
+        if len(word) <= 1:
             continue
         else:
             counts[word] = counts.get(word, 0) + 1
-    del counts["Page"]
     items = list(counts.items())
     items.sort(key=lambda x: x[1], reverse=True)
     # lambda标注的为匿名函数，
@@ -38,7 +37,9 @@ def top_words(words, num):
 
 
 if __name__ == "__main__":
-    text = get_text()
+    u_path = "C:/Users/GISzhao\Desktop/"
+    u_filename = "18年总结.txt"
+    text = get_text(u_path, u_filename)
     txt_words = stat_words(text)
     top_words(txt_words, 10)
-    output_words_info(txt_words)
+    output_words_info(txt_words, u_path, u_filename)

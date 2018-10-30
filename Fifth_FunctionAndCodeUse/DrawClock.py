@@ -59,8 +59,10 @@ def init():
     mk_hand("hurHand", 90)
     secHand = Turtle()  # 类似于secHand = turtle (import turtle)，也是创建新的Turtle实例对象
     secHand.shape("secHand")  # 对于该turtle变量赋值形状(设置turtle的形状，默认为classic), 绘制图形
+    secHand.hideturtle()
     minHand = Turtle()  # 创建一个新的Turtle实例对象
     minHand.shape("minHand")
+    # minHand.hideturtle()
     hurHand = Turtle()
     hurHand.shape("hurHand")
     for hand in secHand, minHand, hurHand:
