@@ -1,0 +1,845 @@
+﻿RESEARCH ARTICLE
+A new landscape index for quantifying urban expansion
+using multi-temporal remotely sensed data
+Xiaoping Liu • Xia Li • Yimin Chen •
+Zhangzhi Tan • Shaoying Li • Bin Ai
+Received: 6 May 2009/Accepted: 11 January 2010/Published online: 28 January 2010
+? Springer Science+Business Media B.V. 2010
+Abstract Landscape metrics or indices have been
+commonly used for quantifying landscape patterns.
+However, most of these indices are generally focused
+on simple analysis and description of the character-
+ization of the geometric and spatial properties of
+categorical map patterns. These indices can hardly
+obtain the information about the spatio-temporal
+dynamic changes of landscape patterns, especially
+when multi-temporal remote sensing data are used. In
+this paper, a new landscape index, i.e., landscape
+expansion index (LEI), is proposed to solve such
+problems. In contrast with conventional landscape
+indices which are capable of reflecting the spatial
+characteristics for only one single time point, LEI and
+its variants can capture the information of the
+formation processes of a landscape pattern. This
+allows one to quantify the dynamic changes in two or
+more time points. These proposed indices have been
+applied to the measurement of the urban expansion of
+Dongguan in Guangdong province, China, for the
+period of 1988–2006. The analysis identifies three
+urban growth types, i.e., infilling, edge-expansion and
+outlying. A further analysis of different values of LEI
+in each period reveals a general temporal transition
+between phases of diffusion and coalescence in urban
+growth. This implies that the regularity in the
+spatiotemporal pattern of urban development in
+Dongguan, is consistent with the explanations
+according to urban development theories.
+Keywords Landscape index ? Urban expansion ?
+Multi-temporal ? Land use
+Introduction
+Landscape patterns are defined as the spatial arrange-
+ment of various landscape elements in different size
+and shape. The arrangement, which reflects the heter-
+ogeneity of landscape, is the result of various ecolog-
+ical processes at multiple scales (Bailey and Gatrell
+1995; Csillag and Kabos 2002). Landscape patterns
+and their dynamic change processes have been the
+crucial componentsoflandscapeecology(Formanand
+Godron 1986; Turner 1989; Wu and David 2002).
+Landscapepatternanalysisisaprimaryresearchtoolin
+landscape ecology that contributes to understanding
+spatialecological dynamics. The analysis has received
+increasing attention in ecological research and the
+management community (Lehmkuhl and Ruggiero
+1991; Cissel et al. 1999; Fu and Chen 2001).
+Characterizing a landscape and quantifying its
+structural changes has become possible with the
+advances in remote sensing and geographic informa-
+tion system (GIS) techniques (Forman and Godron
+X. Liu (&) ? X. Li ? Y. Chen ? Z. Tan ? S. Li ? B. Ai
+School of Geography and Planning, Sun Yat-sen
+University, 135 West Xingang Rd., 510275 Guangzhou,
+People’s Republic of China
+e-mail: yiernanh@163.com
+123
+Landscape Ecol (2010) 25:671–682
+DOI 10.1007/s10980-010-9454-5
+1986). In recent decades, numerous landscape indices
+have been developed to quantify landscape structures
+and spatial heterogeneity based on landscape compo-
+sition and configuration (O’Neill et al. 1988; Turner
+and Gardner 1990; Riitters et al. 1995; Matsushitaa
+et al. 2006). Theoretically, landscape indices refer to
+metrics developed for categorical map patterns. In
+other words, landscape indices are algorithms that
+quantify specific spatial characteristics of patches,
+classes of patches, or entire landscape mosaics. These
+indicesoriginatevariouslyfromstatisticalmeasuresof
+dispersion (Pielou 1997), information theory (O’Neill
+et al. 1988), fractal geometry (Krummel et al. 1987;
+Plotnick et al. 1993) and percolation theory (Gardner
+etal.1993;Lietal.1996).Mostoftheseindicescanbe
+calculated by using landscape analysis packages, such
+as FRAGSTATS (McCarigal and Marks 1995).
+Landscape indices have become increasingly popular
+for quantifying and characterizing various aspects of
+observed spatial patterns (Imbernon and Branthomme
+2001; Zhang et al. 2006). However, there are some
+limitations with the generalization of relationships
+betweenlandscapepatternsandtheirchangeprocesses
+by using conventional landscape indices. Researchers
+use these indices to quantify the geometric and spatial
+properties of categorical map patterns, but seldom use
+them to obtain the information about the dynamic
+change processes of landscape patterns.
+Quantifying landscape patterns and their changes
+is essential for the monitoring and assessment of
+ecological consequences of urbanization (Luck and
+Wu 2002). Urban dynamic processes, especially the
+tremendous worldwide expansion of urban popula-
+tion and urbanized area, have resulted in various
+impacts on the structures, functions, and dynamics of
+ecological systems at a wide range of scales (Luck
+and Wu 2002). Therefore, it is essential to charac-
+terize and understand the changing patterns of urban
+growth for alleviating these problems. The first step
+to understanding the ecology of cities is to adequately
+quantify urban patterns and project their spatiotem-
+poral dynamics. Remote sensing and GIS techniques
+have been widely applied for describing the spatial
+structures of urban environments and characterizing
+patterns of urban structures (Li and Yeh 1998; Herold
+et al. 2003). Recently, the use of landscape indices
+has provided a new avenue for describing the spatial
+land use heterogeneity and urban morphological
+characteristics, and there has been an increasing
+interest in applying landscape indices in analyzing
+land use dynamics and urban growth processes
+(Alberti and Waddell 2000; Herold et al. 2002).
+However, there is a general lack of developing
+appropriate landscape indices for quantifying urban
+dynamics in two or more time points.
+This paper develops a new index landscape
+expansion index (LEI), for better understanding of
+spatio-temporal land use dynamics in fast growing
+regions. Its variants, mean expansion index (MEI)
+and area-weighted mean expansion index (AWMEI),
+are also developed for improving the performance of
+urban expansion analysis. It is expected that LEI
+and its variants can be used to identify the
+expansion types of a certain landscape and its
+distribution patterns from multi-temporal remote
+sensing data. A fast growing region, Dongguan in
+south China, is selected for testing the proposed
+metrics.
+Spatial modes of landscape expansion
+Pattern-process analysis is one of the main threads in
+landscape ecological research, which aims at under-
+standing the complex relationships between land-
+scape patterns and landscape change processes
+(Schro¨der and Seppelt 2006). Resulting from inter-
+actions among different ecological processes and
+natural environments, landscape patterns can affect
+ecological processes in multiple ways, while ecolog-
+ical processes can facilitate the evolution of land-
+scape patterns. One of such important ecological
+processes is landscape expansion (including urban
+growth, species spreading, desertification, soil ero-
+sion, etc.). It involves mainly three types of spatial
+pattern (Fig. 1), i.e., infilling, edge-expansion, and
+outlying, while other patterns can be regarded as
+variants or hybrids of these three basic forms
+(Forman 1995; Ellman 1997; Wilson et al. 2003).
+An infilling type refers to the one that the gap (or
+hole) between old patches or within an old patch is
+filled up with the newly grown patch (Fig. 1a).
+Forman (1995) discusses edge-expansion type,
+defined as a newly grown patch spreading unidirec-
+tionally in more or less parallel strips from an edge
+(Fig. 1b). If the newly grown patch is found isolated
+from the old, then it would be defined as an outlying
+type (Fig. 1c).
+672 Landscape Ecol (2010) 25:671–682
+123
+Landscape expansion index
+There are obvious limitations with conventional
+landscape indices for analyzing urban expansion in
+many fast growing regions. An essential one is that
+they can only quantitatively reflect the landscape
+patterns and their distribution for one single time
+point. Thus, the purpose of the proposed landscape
+expansion index (LEI) is to give a deeper insight of
+landscape patterns and temporal dynamics. In addition
+to identifying the types of landscape expansion, LEI
+can also be used to describe the process of landscape
+pattern changes within two or more time points.
+LEI is defined by using the buffer analysis, which
+is one of the most important spatial analysis functions
+of GIS. The buffers are the zones with specified
+distances around a target geographical feature. The
+analysis can be used in queries to determine which
+entities occur either within or outside the defined
+buffer zone. Figure 1 illustrates the buffer zone of
+new patches with respect to three typical expansion
+forms mentioned above. A set of rules are heuristi-
+cally proposed for identifying these growth patterns:
+(1) if a newly grown patch belongs to the infilling
+type growth, the buffer zone is mostly occupied by
+the old patch (Fig. 1a); (2) if the newly grown patch
+is the edge-expansion type, the area in buffer zone is
+mixed by vacant land (or other landscapes) and the
+old landscape (Fig. 1b); (3) if the newly grown patch
+belongs to the outlying type growth, its buffer zone is
+composed exclusively of vacant land (Fig. 1c).
+In short, the LEI for a new patch can be defined
+and calculated through examining the characteristics
+of its buffer zone:
+LEI ¼ 100 ?
+A o
+A o þ A v
+ð1Þ
+where LEI is the landscape expansion index for a
+newly grown patch, A o is the intersection between the
+buffer zone and the occupied category, A v is the
+intersection between the buffer zone and the vacant
+category.
+According to this definition, the value of LEI
+varies in the range of 0 B LEI B 100. For example,
+suppose the occupied category in buffer zone shown
+in Fig. 1b has an area of 35, the vacant category in
+the buffer zone has an area of 45, then the LEI for the
+new patch in Fig. 1b is 100 ?
+35
+35þ45
+¼ 43:75. Simi-
+larly, the LEI for the new patch in Fig. 1a results 100,
+and becomes 0 in Fig. 1c.
+The indicator of LEI can be used for interpretation
+oflandscapeexpansion types.Asdescribedearlierthat
+there are three major expansion types, it’s straightfor-
+ward to divide the whole range of LEI value into three
+discrete intervals to respectively represent these three
+types. Xu et al. (2007) used a threshold value of ratio
+between common edge (between existing and new
+urban patches) and patch perimeter to distinguish the
+urban expansion types. An expansion type isidentified
+asinfillingwhenthevalueofratioislargerthan0.5.An
+edge-expansiongrowthischaracterizedbythevalueof
+ratiobetweencommonedgeandpatchperimeterbeing
+no more than 0.5. So, in this paper, an infill growth is
+defined by the area in buffer zone being occupied by
+old patch (A o ) at least 50% (Fig. 2a). An edge-
+expansiongrowthischaracterizedbytheareainbuffer
+zone being occupied by old patch (A o ) no more than
+50% (Fig. 2b). Outlying growth is defined by a change
+from vacant land to newly grown patch occurring
+beyond existing old patch (Fig. 1c). So, if the LEI
+value of a new patch ranges (50, 100), then it will be
+assigned as the infilling type; if it ranges (0, 50), then
+the new patch will be defined as the edge-expansion
+type; and the new patch will be classified as the
+outlying type once its LEI value equals 0.
+In many applications, the primary interest is in the
+pattern of the entire landscape mosaic. So, we
+proposed a variant of LEI at landscape level, called
+Fig. 1 Three types of
+landscape expansion
+Landscape Ecol (2010) 25:671–682 673
+123
+mean expansion index (MEI). MEI is integrated LEI
+of all patches over the full extent of the data by
+simple averaging. It is used to reflect the aggregate
+properties of the patch mosaic. MEI is defined by
+using the following equation:
+MEI ¼
+X
+N
+i¼1
+LEI i
+N
+ð2Þ
+where LEI i is the LEI for a new patch, and N is the
+total number of newly grown patches. A larger MEI
+value signals a more substantial compacting trend
+along with the landscape expansion.
+An area-weighted mean expansion index (AW-
+MEI) is further proposed by considering the weight of
+area for each patch. AWMEI is computed simply as
+area-weighted mean LEI. This weighted index equals
+to the sum, across all patches of LEI value multiplied
+by the proportional abundance of the patch. AWMEI
+can be defined as follows:
+AWMEI ¼
+X
+N
+i¼1
+LEI i ? ð a i
+A Þ
+ð3Þ
+where LEI i is the LEI for a newly gorwn patch, a i is
+the area of this new patch, and A is the total area of all
+these newly grown patches. If the landscape expan-
+sion tends to be more compact, the area-weighted
+mean expansion index (AWMEI) will be larger. If the
+trend of landscape expansion is in a diffusion process,
+the vale of AWMEI will be smaller.
+Study area and data processing
+This paper aims to investigate the dynamics of
+landscape expansion using this innovative index LEI
+and itsvariants. Bytaking urban growthas anexample
+of landscape expansion, these indices are used to
+identify the spatial modes of urban expansion. Three
+urban growth types will be identified: infilling, edge-
+expansion and outlying growth. These indices are
+appliedtothepatternanalysisoftheurbanlandscapein
+Dongguan,afastgrowingcityintheeastofPearlRiver
+Delta, China (Fig. 3). The city is among the corridor
+betweenGuangzhouandShenzhen,withatotalareaof
+2,465 km 2 . Its rapid urban expansion is closely asso-
+ciated with fast economic growth. A large amount of
+agriculturalland hasbeen lostinthisregionbecauseof
+rapid urban development and poor land management
+(Yeh and Li 1997; Liu et al. 2008). In the period of
+1988–2006, the urban area increased dramatically
+from 66.7 km 2 in 1988 to 853.2 km 2 in 2006.
+TM satellite images in 1988, 1993, 1997, 2001 and
+2006 were used to provide the inputs to the analysis.
+The study area consists of 2,693 9 1,864 pixels, with
+a ground resolution of 30 m. The geometric correc-
+tion of TM images was carried out by using the PCI
+software. The correction was based on the ground
+control points (GCPs), which were evenly distributed
+over the study area. The correction accuracy was
+within 0.5 pixel according to the assessment. The
+object-based classification software, eCognition, was
+then used for supervised classification of these
+images. Accuracy assessment was conducted using
+the ground truth data. The classification accuracy was
+92.0% for these images. Since the focus of this study
+was urban expansion, the land use types were further
+converted to only two classes: urban and non-urban.
+Application and results
+The classification results were further used to extract
+the urban areas of Dongguan for four periods, i.e.,
+Fig. 2 Infilling growth
+type and edge-expansion
+type
+674 Landscape Ecol (2010) 25:671–682
+123
+1988–1993, 1993–1997, 1997–2001 and 2001–2006.
+The calculation of the LEI and its variants was
+implemented through the programming of Visual
+Basic 6.0. Firstly, land use data need to be converted
+into the vector format. Then, the buffer zones of all
+new patches are generated by executing the program.
+Buffers can be set at constant or variable distances
+based on feature attributes. In this paper, the buffers
+are created by using a constant distance of 1 m. Once
+the buffer zones of all growth patches have been
+obtained, they are overlaid with the old urban patches
+for calculating the area of the old urban patch within
+the buffer zones. Lastly, the LEI is calculated for
+each new urban patch according to equation (1). The
+buffer zones of the new urban patches were auto-
+matically generated by the program (Fig. 4); a, b and
+Fig. 3 Location of the study area (Dongguan)
+Landscape Ecol (2010) 25:671–682 675
+123
+c refer respectively to the infilling type, the edge-
+expansion type and the outlying type.
+The buffer distance may have an effect on the LEI
+value. Generally, the buffer distance should be set
+roughly equal to or smaller than the spatial resolution
+of remotely sensed data. It remains a question whether
+the value of LEI would be significantly changed if a
+different buffer distance (equal or smaller than 30 m)
+is used. In order to examine the effect of the buffer
+distance, we use ten different buffer distances to
+calculate LEI value. The buffer distance is varied
+between 1 and 30 m, i.e., 1, 2, 3, 4, 5, 10, 15, 20, 25
+and 30 m. Then, the standard deviation (SD) of LEI
+value under different buffer distances for each newly
+grown patch is calculated. The standard deviation,
+which can provide a way to measure the robustness of
+LEI, is defined as follow:
+SD i ¼
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+ð1=MÞ
+X
+M
+j¼1
+ðL j
+i
+? ^ L i
+v
+u
+t
+Þ 2 ð4Þ
+where SD i is the standard deviation of LEI for the ith
+newly grown patch with different buffer distances, M
+is the number of buffer distance, here M = 10,
+^
+L i is
+the mean LEI value of the ith newly grown patch
+under different buffer distance, and L j
+i
+represents the
+LEI value of the ith newly grown patch with the jth
+buffer distance.
+Then, the mean SD value of all newly grown
+patches is calculated to measure the sensitivity of
+buffer distance:
+MSD ¼
+X
+N
+i¼1
+SD i
+N
+ð5Þ
+where N is the total number of new patches.
+A smaller MSD value signals a more stable LEI
+value under the change of buffer distance. As shown
+in Table 1, the values of MSD for four periods with
+distances (1 m-5 m) are 0.078 (1988–1993), 0.074
+(1993–1997), 0.076 (1997–2001) and 0.069 (2001–
+2006), respectively. The values of MSD for four
+periods are small, which indicates that the LEI value
+change slightly with different buffer distances
+(1–5 m). However, the MSD value with distances
+(10–30 m) is bigger than the MSD value with
+distances (1–5 m). The smaller is the buffer distance,
+the more stable of the value of LEI becomes. In this
+paper, the buffer distance is set equal to 1 m.
+newly grown urban buffer Zone non-urban old urban
+a
+a
+b
+b
+c
+c
+Fig. 4 Creation of buffer zones for capturing urban expansion types
+676 Landscape Ecol (2010) 25:671–682
+123
+The histograms of LEI for four periods were
+produced to perform a quantitative analysis of the
+urban growth patterns (Fig. 5). Throughout all of the
+period (1988–2006), the value of LEI was in a
+decreasing trend. Additionally, Fig. 5 shows an
+interesting pattern of the histograms about the
+robustness of LEI. Despite the different development
+forms in the four periods, three LEI peaks, i.e., [0],
+[50–52], and [100], remained quite stable for all
+periods. Moreover, the three peaks can provide the
+evidence to set the thresholds of LEI values for
+determining the urban patch growth types. The
+patches within the three LEI peak zones had a
+dominant proportion among all the patches, i.e., 66%
+(1988–1993), 43% (1993–1997), 34% (1997–2001),
+and 37% (2001–2006) respectively for each period
+(Table 2). According to the analyses, several thresh-
+olds of LEI values were used to determine the urban
+patch growth types: (1) 50\LEI B 100, the infilling
+type; (2) 0\LEI B 50, the edge-expansion type;
+and (3) the outlying type if LEI = 0.
+Figure 6 shows the spatial distribution of different
+urban growth types in four periods. Three urban patch
+growth types were identified by using the proposed
+indices. Dramatic changes have occurred for the
+urban landscape of Dongguang from 1988 to 2006
+because a great amount of agricultural land use has
+been transformed into urban land use. However, the
+urban landscape shows distinct growth patterns in
+different periods. In the first period (1988–1993), the
+patterns of urban growth were dominated by the
+outlying type (Fig. 6a). New development mainly
+took place along the major transportation networks,
+exhibiting a disordered and scattered pattern.
+Although the infilling-type growth was also identified
+in this period, it is much less dominated with some
+occasions in the city proper. Similarly, the edge-
+expansion-type growth was also less obvious because
+it was found mainly around town and district centers.
+During the period of 1993–1997, new patches labeled
+as outlying were less found while the edge-expan-
+sion-type growth took a predominant role (Fig. 6b).
+Meanwhile, the infilling-type growth was also inten-
+sified around town and district centers. During the
+period of 1997–2001, the outlying-type growth was
+still in a decreasing trend, and the edge-expansion-
+type and the infilling-type growth became dominated
+(Fig. 6c). In the last period (2001–2006), a spatial
+ring structure was formed in the whole city with a
+sequence of land use types. The edge-expansion-type
+and the infilling-type growth were still dominated in
+the study area. However, the edge-expansion-type
+was in a decreasing trend. As a result, the urban
+morphology became more compact (Fig. 6d).
+Table 1 Sensitivity of LEI under different buffer distances
+based on MSD
+Period 1988–
+1993
+1993–
+1997
+1997–
+2001
+2001–
+2006
+MSD (1–5 m) 0.078 0.074 0.076 0.069
+MSD (10–30 m) 0.472 0.446 0.459 0.421
+(a)
+(c) (d)
+(b)
+Fig. 5 Robustness of LEI
+based on the histograms for
+four periods
+Landscape Ecol (2010) 25:671–682 677
+123
+The detailed information about the three growth
+types was obtained by calculating their total area for
+the four periods (Fig. 7). Throughout all of the 18-
+year period, the edge-expansion was the primary
+growth type except in the period of 1988–1993. In
+this period, the outlying type occupied 47% of the
+total newly developed urban land, while the infilling
+type growth only occupied 9%. The edge-expansion
+type accounted for a considerable proportion of 45%.
+In the period of 1993–1997, the proportion of the
+outlying type dramatically reduced to 14%. In
+contrast, there was a tremendous increase of the
+proportion of the infilling type (16%) and especially
+the edge-expansion type (70%). Between 1997 and
+2001, the proportion of the outlying type continu-
+ously declined and became least dominated (8%).
+Table 2 Stable distribution of three peaks in terms of the number of patches and the patch proportion for four periods
+Period 1988–1993 1993–1997 1997–2001 2001–2006
+LEI
+interval
+Number of
+patches
+Patch
+proportion
+Number of
+patches
+Patch
+proportion
+Number of
+patches
+Patch
+proportion
+Number of
+patches
+Patch
+proportion
+0 2,744 49 1,646 18 1,384 11 1,935 13
+50–52 983 17 2,104 24 2,434 19 2,562 18
+100 4 0 70 1 511 4 913 6
+Total 3,316 66 3,820 43 4,329 34 5,410 37
+old urban 0 24 12 km non-urban infilling edge-expansion outlying
+(a)
+1988-1993
+(b)
+1993-1997
+(c)
+1997-2001
+(d)
+2001-2006
+Fig. 6 Spatial distribution of three urban growth types in the four periods
+678 Landscape Ecol (2010) 25:671–682
+123
+The percentage of the edge-expansion type and the
+infilling type increased persistently up to 64 and 28%
+respectively. In the period of 2001–2006, the situa-
+tion had only a trivial change with the result of 8, 63
+and 29% for the outlying type, the edge-expansion
+type and the infilling type, respectively.
+Meanwhile, the number of patches (NP) for the
+three urban growth types exhibited some regularity in
+the temporal patterns (Fig. 7). The outlying type had
+a proportion of 49, 18, 11 and 13% in the four periods
+respectively, showing a remarkably decreasing trend.
+NP proportion of the edge-expansion type was 38%
+in the period 1988–1993. It increased to 57% in the
+period 1993–1997 and later decreased gradually to
+50% in the period 1993–2006. Joining the edge-
+expansion type with an evidently rising trend, the
+infilling type had a proportion of 13, 25, 34, and 37%
+during the four periods respectively.
+To better understand of the morphology and its
+development trends of the study area, the mean
+expansion index (MEI) and area-weighted mean
+expansion index (AWMEI) were calculated for the
+growth patterns from 1988 to 2006 based on equation
+(3) and (4). As shown in Table 3, the mean expansion
+index (MEI) increased from 20.63 in 1988–1993 to
+43.83 in 2001–2006. However, it was obviously that
+the largest increase was observed during 1988–1997.
+This indicates that the urban growth type had
+transferred from the outlying to the edge-expansion
+in this period. In the period of 1997–2006, MEI
+increased slightly (from 41.74 to 43.83), and the
+urban growth pattern was quite stable. The area-
+weighted mean expansion index (AWMEI) was
+13.58, 29.48, 39.30 and 39.53 in the four periods
+respectively. The changes of AWMEI values showed
+an interesting trend. AWMEI increased dramatically
+during the period of 1988–2001, while increased
+slightly in 2001–2006. As a whole, the results of MEI
+and AWMEI show a clear ascending trend. This
+implies that the city tended to be more compact.
+Studies have indicated that urban growth manifests
+wave-like properties (Blumenfeld 1954; Boyce 1966;
+Newling 1969). Dietzel et al. (2005) proposed that the
+urban growth process could be described as a general
+temporal oscillation between the phases of diffusion
+and coalescence based on the theory of urban growth
+phases (Cressy 1939; Duncan et al. 1962; Winsbor-
+ough 1962). Urban growth can be characterized as
+having two distinct processes, diffusion and coales-
+cence, with each process following a harmonic
+pattern. As shown in Fig. 8, the spatial evolution of
+urban areas oscillates between the diffusion and
+coalescence of individual urban areas. In the initial
+stage, the process starts with the expansion of an
+urban seed or core area (Fig. 8a). As the seed grows,
+it disperses growth to new development centers or
+cores (Fig. 8b), and this diffusive process is compa-
+rable to the outlying type growth (Dietzel et al. 2005).
+Thereafter, the urban growth is around the periphery
+of the initial urban land (Fig. 8c), which is compa-
+rable to the edge-expansion type. As the process
+continues, urban development would more likely to
+take a way of gradually infilling up the gaps among
+the existing urban patches, hence the process is
+termed coalescence (Fig. 8d).
+As shown in Figs. 5, 6 and 7 and Tables 2 and 3,
+there are two distinct phases for the rapid urbaniza-
+tion process in Dongguan from 1988 to 2006, This is
+Fig. 7 Percentages of growth area and number of patches for the three urban growth types in the four periods
+Table 3 MEI and AWMEI of newly grown urban patches in
+the four periods in Dongguan
+Period 1988–1993 1993–1997 1997–2001 2001–2006
+MEI 20.63 34.77 41.74 43.83
+AWMEI 13.58 29.48 39.30 39.53
+Landscape Ecol (2010) 25:671–682 679
+123
+consistent with the theory of urban growth phases and
+the ‘‘diffusion-coalescence’’ model. In 1988, urban
+patches were mainly distributed in the city center.
+Along with the development of urbanization, more
+individual urban development patches are formed,
+causing a peak in the number of the outlying type
+growth patches. As the values of both MEI and
+AWMEI were quite small at the initial period (1988–
+1993), the urban development was more regarded as
+diffusion, and most of the newly grown patches are
+classified as the outlying type. As a result, multiple
+new growth centers emerged from these newly
+growth patches. As the growth continued, neighbor-
+hood patches became increasingly connected because
+of the growth mechanism. In the period of 1993–
+2006, the edge-expansion type and the infilling type
+started to take a more important position in the light
+of their enlarging proportions (Fig. 7), and the higher
+values of both MEI and AWMEI implied that the
+urban development in this period tended to be
+‘‘coalesced’’. These evidences prove that the LEI
+and their variants proposed in this paper can effec-
+tively provide a quantitative analysis of urban
+development mechanisms, and thus examine the
+theories of urban growth phases.
+Conclusions
+Although numerous landscape indices have been
+proposed on the description or analysis of landscape
+patternsforaspecifictimepoint,theycanhardlyreflect
+the basic mechanisms governing the process of land-
+scape changes. Being the supplement to the conven-
+tional landscape indices, the LEI and its variants
+proposed in this study are more capable of quantifying
+the spatial patterns of landscape expansion within two
+or more time points. These proposed indices can
+examine the way in which a landscape evolves, and
+revealtherelationshipsbetweenthespatialdistribution
+of a landscape as well as its evolution process. The
+implementation of this model is rather convenient
+since the buffer zones of patches can be automatically
+delineated by the proposed program.
+Urban growth is a sort of critical process from an
+ecological point of view. By using the proposed LEI
+and its variants, this paper investigates the urban
+growth processes in Dongguan for four periods, i.e.,
+1988–1993, 1993–1997, 1997–2001 and 2001–2006.
+The analyses has demonstrated that the proposed
+landscape expansion index (LEI) can be used to
+identify various growth types, i.e., infilling, edge-
+expansion, and outlying. LEI provides a systematic,
+simple, and replicable method that can be use to
+describe the urbanization processes in a way that
+considers both the amount of changes and the spatial
+patterns. The urban development trajectory of Dong-
+guan shows different spatial expansion modes during
+the whole period. In the initial period of 1988–1993,
+the outlying expansion was the dominant growth
+type. NP proportion of the outlying type growth
+occupied 49% of the total newly developed urban
+land, while the infilling type growth only occupied
+9%. The edge-expansion type accounted for a con-
+siderable proportion of 38%. According to the theory
+of urban growth phases, the city in this period is
+experiencing the ‘‘diffusion’’ phase. From 1993 to
+2006, NP proportion of the outlying type growth
+decreased gradually, i.e., 19% (1993–1997), 11%
+(1997–2001), 13% (2001–2006), while the edge-
+expansion type and the infilling type growth started to
+take a more important position in the light of their
+enlarging proportions, which implied that the urban
+development in this period tends to be the ‘‘coales-
+cence’’ phase.
+The variants of LEI can provide additional infor-
+mation about urban expansion. In the whole period,
+the increasingly values of MEI (from 20.63 to 43.83)
+and AWMEI (from 13.58 to 39.53) also indicate that
+the old scattered and disordered ‘‘diffusion’’ phase
+t 0 t 1 t 2 t 3
+initial urban area diffusion edge-expansion
+coalescence
+(a) (b) (c)
+(d)
+Fig. 8 Urban evolution according to the theory of urban growth phases
+680 Landscape Ecol (2010) 25:671–682
+123
+was transformed into a more compact ‘‘coalescence’’
+phase based on the development mechanisms.
+This study has demonstrated that the processes of
+diffusion and coalescence can be clearly identified in
+the spatio-temporal development of Dongguan. The
+regularity of urban development processes detected
+by these indices is consistent with the theories of
+urban growth phases. This indicates that LEI and its
+variants can become an important tool for capturing
+the complex dynamics of urban growth by using
+multi-temporal remote sensing data. These indices
+can thus provide useful information about the patterns
+and change processes of the urban landscapes.
+Acknowledgments This research was in part supported bythe
+National Natural Science Foundation of China (Grant No.
+40901187), the Key National Natural Science Foundation of
+China(GrantNo.40830532),theGuangdongProvincialNatural
+Science Foundation of China (Grant No. 9451027501002471)
+and the Research Fund of LREIS, CAS (Grant No.4106298).
+References
+Alberti M, Waddell P (2000) An integrated urban development
+and ecological simulation model. Integr Assess 1:215–227
+Bailey TC, Gatrell AC (1995) Interactive spatial data analysis.
+Pearson Education Limited, Harlow
+Blumenfeld H (1954) The tidal wave of metropolitan expan-
+sion. J Am Inst Plan 20:3–14
+Boyce RR (1966) The edge of the metropolis: the wave theory
+analog approach. Brit Columbia Geograp Ser 7:31–40
+Cissel JH, Swanson FJ, Weisberg PJ (1999) Landscape man-
+agement using historical fire regimes: Blue River Oregon.
+Ecol Appl 9:1217–1234
+Cressy PF (1939) Population succession in Chicago, 1898–
+1930. Am J Soc 44:59–69
+Csillag F, Kabos S (2002) Wavelets, boundaries and the
+analysis of landscape pattern. Ecoscience 9:177–190
+Dietzel C, Oguz H, Hemphill JJ, Clarke KC, Gazulis N (2005)
+Diffusion and coalescence of the Houston metropolitan
+area: evidence supporting a new urban theory. Environ
+Plan B 32(2):231–236
+Duncan B, Sabagh G, Van Arsdol MD (1962) Patterns of city
+growth. Am J Soc 67:418–429
+Ellman T (1997) Infill: the cure for sprawl? Arizona issue
+analysis, 146. The Goldwater Institute, Phoenix, p 21
+Forman RT (1995) Land mosaics: the ecology of landscapes
+and regions. Cambridge University Press, Cambridge
+Forman RT, Godron M (1986) Landscape ecology. Wiley, New
+York
+Fu BJ, Chen LD (2001) Agricultural landscape spatial pattern
+analysis in the semi-arid hill area of the Loess Plateau,
+China. J Arid Environ 44(3):291–303
+Gardner RH, O’Neill RV, Turner MG (1993) Ecological
+implications of landscape fragmentation. In: Pickett STA,
+McDonnell MJ (eds) Humans as components of ecosys-
+tems: subtle human effects and the ecology of populated
+areas. Springer, New York, pp 208–226
+Herold M, Clarke KC, Scepan J (2002) Remote sensing and
+landscape metrics to describe structures and changes in
+urban land use. Environ Plan A 34:1443–1458
+Herold M, Goldstein NC, Clarke KC (2003) The spatiotem-
+poral form of urban growth: measurement, analysis and
+modeling. Remote Sens Environ 86:286–302
+Imbernon J, Branthomme A (2001) Characterization of land-
+scape pattern of deforestation in tropical rain forests. Intl J
+Remote Sens 22:1753–1765
+Krummel JR, Gardner RH, Sugihara G, O’Neill RV, Coleman
+PR (1987) Landscape pattern in a disturbed environment.
+Oikos 48:321–324
+Lehmkuhl JF, Ruggiero LF (1991) Forest fragmentation in the
+Pacific Northwest and its potential effects on wildlife. In
+Wildlife and vegetation of unmanaged Douglas-fir forests
+pp 35–46. Tech. coords. by Ruggiero LF, Aubry KB,
+Carey AB, Huff MH. US For Serv Gen Tech Rep PNW-
+285. Portland, OR, USA
+Li X, Yeh A (1998) Principal component analysis of stacked
+multitemporal images for the monitoring of rapid urban
+expansion in the Pearl River Delta. Int J Remote Sens
+19:1501–1518
+Li BL, Loehle C, Malon D (1996) Microbial transport through
+heterogeneous porous media: random walk, fractal, and
+percolation approaches. Ecol Model 85:285–302
+Liu XP, Li X, Liu L, He JQ (2008) A bottom-up approach to
+discover transition rules of cellular automata using ant
+intelligence. Int J Geogr Inf Sci 22(11–12):1247–1269
+Luck M, Wu J (2002) A gradient analysis of urban landscape
+pattern: a case study from the Phoenix metropolitan
+region of USA. Landscape Ecol 17:327–329
+Matsushitaa B, Xu M, Fukushimaa T (2006) Characterizing the
+changes in landscape structure in the Lake Kasumigaura
+Basin, Japan using a high-quality GIS dataset. Landscape
+Urban Plan 9:241–250
+McCarigal K, Marks BJ (1995) FRAGSTATS: spatial pattern
+analysis program for quantifying landscape structure. Gen
+Tech Rep PNW-GTR-351. Pacific Northwest research
+Station
+Newling BE (1969) The spatial variation of urban population
+densities. Geograp Rev 59:242–252
+O’Neill RV, Krummel JR, Gardner RH et al (1988) Indices of
+landscape pattern. Landscape Ecol 1:153–162
+Pielou EC (1997) Mathematical ecology. Wiley, New York
+Plotnick RE, Gardner RH, O’Neill RV (1993) Lacunarity
+indices as measures of landscape texture. Landscape Ecol
+8:201–211
+Riitters KH, O’Neill RV, Hunsaker CT et al (1995) A factor
+analysis of landscape pattern and structure indices.
+Landscape Ecol 10:23–39
+Schro¨der B, Seppelt R (2006) Analysis of pattern–process
+interactions based on landscape models—Overview,
+general concepts, and methodological issues. Ecol Model
+199:505–516
+Turner MG (1989) Landscape ecology: the effect of pattern on
+process. Ann Rev Ecol Syst 20:171–197
+Turner MG, Gardner RH (eds) (1990) Quantitative methods in
+landscape ecology. Springer, New York, pp 3–16
+Landscape Ecol (2010) 25:671–682 681
+123
+Wilson EH, Hurd J, Civco D, Prisloe MP, Arnold C (2003)
+Development of a geospatial model to quantify, describe
+and map urban growth. Remote Sens Environ 86:275–285
+Winsborough HH (1962) City growth and city structure.
+J Region Sci 4:35–50
+Wu J, David J (2002) A spatially explicit hierarchical approach
+to modeling complex ecological systems: theory and
+applications. Ecol Model 153:7–26
+Xu C, Liu M, Zhang C, An S, Yu W, Chen JM (2007) The
+spatiotemporal dynamics of rapid urban growth in the
+Nanjing metropolitan region of China. Landscape Ecol
+22(6):925–937
+Yeh AGO, Li X (1997) An integrated remote sensing—GIS
+approach in the monitoring and evaluation of rapid urban
+growth for sustainable development in the Pearl River
+Delta, China. Int Plan Studies 2:193–210
+Zhang SQ, Zhang J, Li F, Cropp R (2006) Vector analysis
+theory on landscape pattern (VATLP). Ecol Model 193(3–
+4):492–502
+682 Landscape Ecol (2010) 25:671–682
+123

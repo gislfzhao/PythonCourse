@@ -1,0 +1,1637 @@
+﻿Contents lists available at ScienceDirect
+Landscape and Urban Planning
+journal homepage: www.elsevier.com/locate/landurbplan
+Research Paper
+A future land use simulation model (FLUS) for simulating multiple land use
+scenarios by coupling human and natural effects
+Xiaoping Liu a , Xun Liang a , Xia Li b,a, ⁎ , Xiaocong Xu a, ⁎ , Jinpei Ou a , Yimin Chen b,a , Shaoying Li c ,
+Shaojian Wang a , Fengsong Pei d
+a
+Guangdong Key Laboratory for Urbanization and Geo-simulation, School of Geography and Planning, Sun Yat-sen University, Guangzhou, 510275, PR China
+b
+School of Geographic Sciences, Key Lab. of Geographic Information Science (Ministry of Education), East China Normal University, 500 Dongchuan Rd, Shanghai
+200241, PR China
+c
+School of Geographical Sciences, Guangzhou University,Guangzhou, Guangdong, PR China
+d
+School of Geography, Geomatics, and Planning, Jiangsu Normal University, Xuzhou, 221116, Jiangsu, China
+A R T I C L E I N F O
+Keywords:
+Land use and land cover change
+Land use simulation
+System dynamics
+Cellular automata
+FLUS
+Human and natural effects
+A B S T R A C T
+Land use and land cover change (LUCC) simulation models are effective and reproducible tools for analyzing
+both the causes and consequences of future landscape dynamics under various scenarios. Current simulation
+models primarily focus on the evolution of specific land use types under the influence of human activities, but
+they rarely consider background climatic effects. However, these background climate changes significantly affect
+the landscape dynamics and should be incorporated into long-term LUCC simulations under various human-
+climate-included scenarios. In this paper, we propose a future land use simulation (FLUS) model that explicitly
+simulates the long-term spatial trajectories of multiple LUCCs. The top-down system dynamics and bottom-up
+cellular automata were interactively coupled during the projection period, which improved the model’s ability to
+accurately simulate future land use patterns. A self-adaptive inertia and competition mechanism was developed
+within the CA model to process the complex competitions and interactions between the different land use types.
+The proposed model was applied to an LUCC simulation in China from 2000 to 2010. The results show promising
+grid-to-grid agreement compared to actual land use, and the simulation accuracy is higher than other well-
+accepted models, such as CLUE-S and CA models. The model was further applied to the simulation of four
+scenarios from 2010 to 2050 that depict different development strategies by considering various socio-economic
+and natural climatic factors. The simulation results and findings demonstrate that the proposed model is ef-
+fective for future LUCC simulation under variously designed scenarios. FLUS is available for free download at
+http://www.geosimulation.cn/FLUS.html.
+1. Introduction
+The land cover on earth and its anthropogenic exploitation are
+crucial links between human activities and the natural environment.
+Since the industrial era, land use and land cover change (LUCC) has
+been critical in contributing to regional and global climate change by
+driving energy recycling and material exchange on the land surface
+(Foley et al., 2005). Human-involved LUCCs, such as forest over-
+exploitation, agricultural intensification and urbanization, not only
+accelerate global warming via increasing greenhouse gas emissions
+(Kalnay &Cai, 2003; Pielke et al., 2002) but also pervasively cause ir-
+reversible biological diversity losses across the globe (Matson, Parton,
+Power,& Swift, 1997; Tilman et al., 2001; Vitousek, Mooney,
+Lubchenco, &Melillo, 1997). Rapid urban expansion and socio-
+economic development have increased the tension in human-environ-
+ment interactions (Vitousek et al., 1997; Yao et al., 2016), as more than
+50% of the world’s population lived in urban areas in 2007, a number
+that will likely reach approximately 70% by 2050 (Bloom, 2011).
+Spatiotemporal LUCC simulations are effective and reproducible
+tools for analyzing both the causes and consequences of alternative
+future landscape dynamics relative to socio-economic and natural en-
+vironmental driving forces (Costanza &Ruth, 1998; Verburg, Schot,
+Dijst,& Veldkamp, 2004). The complex structure of linkages and feed-
+back is expected to be solved using simulation models to project future
+land use trajectories and support future land-use policy decisions
+(Heistermann, Müller,& Ronneberger, 2006; Kline, Moses,
+Lettman, &Azuma, 2007; Schulp, Nabuurs, &Verburg, 2008). Cellular
+automata (CA) are common methods to simulate the LUCC spatial
+http://dx.doi.org/10.1016/j.landurbplan.2017.09.019
+Received 8 July 2016; Received in revised form 2 September 2017; Accepted 17 September 2017
+⁎ Corresponding authors.
+E-mail addresses: liuxp3@mail.sysu.edu.cn (X. Liu), liangxunnice@163.com (X. Liang), lixia@geo.ecnu.edu.cn, lixia@mail.sysu.edu.cn (X. Li), xuxiaoc@mail3.sysu.edu.cn (X. Xu).
+Landscape and Urban Planning 168 (2017) 94–116
+0169-2046/ © 2017 Elsevier B.V. All rights reserved.
+MARK
+evolution by estimating the state of a pixel according to its initial state,
+the surrounding neighborhood effects and a set of transition rules. Al-
+though very simple, a CA model can generate rich patterns and can
+effectively represent nonlinear spatially stochastic LUCC processes
+(Batty, Couclelis, &Eichen, 1997). In the last two decades, a growing
+body of literature has described the applications of CA models in urban
+development studies (Clarke&Gaydos, 1998; Li and Yeh, 2000,2002;
+Li, Chen, Liu, Li,& He, 2011; White, Engelen, &Uljee, 1997; Wu, 1999).
+By properly defining the transition rules, urban CA models have strong
+capabilities for simulating the spatiotemporal complexities of urban
+systems (Chen, Li, Wang, &Liu, 2012; Li, Lin, Chen, Liu, &Ai, 2013;
+Liu& Hu et al., 2017; Liu, Li, Liu, He,&Ai, 2008; Liu, Li, Shi, Wu,&Liu,
+2008; Liu, Li, Shi, Zhang, &Chen, 2010; Liu et al., 2014). Other studies
+have focused on simulating deforestation under the influences of nat-
+ural hazards or human activities (Gustafson, Shifley, Mladenoff,
+Nimerfro, &He, 2000; Kok&Winograd, 2002). However, most of these
+models can only simulate the dynamics of one individual land use,
+while in many cases, different LUCC processes occur simultaneously
+and affect each other. Thus, multiple LUCC simulations are much more
+effective for determining realistic future land use patterns. Conducting
+multiple LUCC simulations within one CA model is challenging because
+of the interaction and competition among different land uses, which
+inevitably leads to very complicated definitions of the transition rules.
+The complicated interactions and competition among different land use
+types are not well explored. Most current studies simply estimate the
+probabilities of individual land use types separately and assign the
+highest value to the land grid, such as the ANN-CA (Li&Yeh, 2002) and
+CLUE-S series models (Verburg et al., 2002; Verburg&Overmars,
+2009). Moreover, the role of climate change in long-term land use
+patterns is not well addressed in these models.
+Climate change (global warming, extreme weather events, etc.) and
+ecological degradation (hydrological variation, soil erosion, etc.) have
+long-term effects that alter the natural landscape dynamics (Bakker
+et al., 2005; Geist &Lambin, 2004; Lambin, Geist, &Lepers, 2003; Li,
+Guangzhao, Xiaoping, &Xun, 2017; Okin, Murray, &Schlesinger,
+2001). Temperature variability, freshwater availability and soil quality
+affect various human-dominated land use decisions, such as the redis-
+tribution and transformation of cultivated land, grassland and pas-
+tureland (Mendelsohn &Dinar, 1999; Wolf, Bindraban,
+Luijten, &Vleeshouwers, 2003). Such interactions and feedback within
+the LUCC environmental system will eventually have profound impacts
+on human welfare and long-term social sustainability through air pol-
+lution, natural resource shortages, food risk, etc. (Hansen, 2010;
+Hay &Mimura, 2006). Issues such as land degradation (De Koning,
+Verburg, Veldkamp,&Fresco, 1999), biodiversity (Chapin et al., 2000;
+Sala et al., 2000) and global climate change (Tangen, 1999) have in-
+creasingly demanded quantitative information on regional and global
+LUCCs and their future changes, both spatially and temporally. The
+exploration of both the LUCC natural environmental and anthropogenic
+impacts is vitally important for climate change adaptation and main-
+taining a sustainable landscape.
+Another challenge of multiple LUCC simulations is that CA models
+are bottom-up models that determine the system evolution from a local
+perspective. However, macro-scale demands, political planning and
+background climate influences on different land use types cannot be
+properly represented in the traditional CA models (Ward,
+Murray, &Phinn, 2000). Thus, it is necessary to introduce top-down
+models to address these planning and development factors, such that
+demands for different use types can be determined from the macro-scale
+perspective and can be regarded as scenarios that represent future de-
+velopment pathways (Sohl, Sayler, Drummond, &Loveland, 2007;
+Xiang &Clarke, 2016). Through such coupling, the land use change
+quantities can be rationally determined. Subsequently, the CA model
+iterates and allocates these land use change quantities according to the
+transition rules at the local level. A series of researchers have proposed
+models to integrate the top-down quantitative estimation methods,
+such as historical trend extrapolation, complex multi-sector models
+(Verburg&Overmars, 2009), Forrester models (Berling-Wolff&Wu,
+2004), and system dynamics (He et al., 2005; Huang, He, Liu,& Shi,
+2014), using the bottom-up CA model to better simulate the LUCC
+dynamics. These top-down methods are designed to address the de-
+mands, planning, and developments of individual land use types from a
+macro-scale perspective to determine the land use change quantities.
+The CA model then allocates these land use change quantities through
+local interactions and evolutions of different land use types at the grid
+cell level. Examples of such integrated CA models include CLUE-S
+(Verburg et al., 2002), LTM (Pijanowski, Alexandridis, &Mueller,
+2006), the SLEUTH model (Dietzel &Clarke, 2007), and FORE-SCE
+(Sohl et al., 2007). However, problems still occur, because these cou-
+pled models directly link two sub-models via the land use demands at
+the end of the study period, despite the bottom-up and top-down
+models being built using different assumptions. The interactions and
+feedback loops between the bottom-up and top-down models are ig-
+nored, leading to the separation of the macro land use demand pro-
+jections and the local change allocations.
+Although many of these models have addressed socio-economic and
+geographic condition factors, few studies have considered the back-
+ground climate conditions. Many previous studies (Bakker et al., 2005;
+Mendelsohn & Dinar, 1999; Wolf et al., 2003) have agreed that climate
+factors (e.g., temperature increases and precipitation variations) have
+significant effects on specific LUCCs, such as forest, farmland, and
+pastureland. Without incorporating climate change scenarios, these
+models are not applicable for future LUCC simulations under human-
+climate-included scenarios and are therefore unable to reliably de-
+termine future land use patterns due to the significant effects of climate
+change on the LUCC dynamics. In addition, the top-down and bottom-
+up models are typically built upon different assumptions. Current si-
+mulation models typically loosely integrate two sub-models via the land
+use demands at the end of the study period, but they seldom consider
+their interactions and feedback, leading to the separation of the macro
+land use demand projection and the local change allocation. To sum-
+marize, although great progress has been achieved, three limitations
+exist in the current multiple LUCC simulation models: 1) Although the
+socio-economic factors and geographic conditions are well addressed,
+few studies have considered the background climate conditions. Future
+climate changes will have significant impacts on the long-term land use
+dynamics. 2) Most of the multiple LUCC models train and estimate the
+conversion probabilities of each land use type independently, resulting
+in a separation between the different land use types. The competition
+and interactions are not well explored in these models. Finally, 3) the
+interactions and feedback between the top-down and bottom-up models
+are not typically coupled, which results in the separation between the
+macro land use demand projection and the local change allocation.
+In this paper, we present an approach that interactively integrates
+top-down system dynamics (SD) with a bottom-up CA model for a
+multiple LUCC dynamic simulation. The proposed integrated model
+differs from existing models in its ability to explicitly simulate the
+spatial trajectories of multiple LUCCs under alternative scenarios by
+coupling both human-related and natural environmental effects using
+an elaborate design of the interactions and competition among different
+land use types and using an interactive coupling mechanism between
+the SD and CA models. In the proposed model, we incorporated natural
+factors, including future global warming and precipitation variations
+and socio-economic developments into both the SD and CA models. A
+self-adaptive inertia and competition mechanism is designed to address
+the complex local land use interactions and estimate the transition
+probabilities of different land use types simultaneously. An “interactive
+coupling” mechanism is introduced into the model allocation, which
+integrates the bottom-up and top-down models interactively via the
+mutual feedbacks between land use quantities and local allocations
+along the entire simulated time series. This new coupling mechanism
+enables the two sub-models to evolve collaboratively. The proposed
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+95
+model is illustrated with multiple LUCC simulation scenarios in the
+China region from 2010 to 2050 at a spatial resolution of 1 × 1 km 2 .
+Four scenarios were designed based on the impacts of both the natural
+environment and human activities. The simulation results are compared
+and analyzed to assess the human and natural effects on future LUCCs.
+2. Methodology
+In this paper, we present a future land use simulation (FLUS) model
+for multiple LUCC scenarios for future land use by coupling human and
+natural effects. The proposed model is an integration of a top-down
+system dynamic (SD) model and bottom-up cellular automata (CA). The
+SD model is used to project the land use scenario demands under var-
+ious socio-economic and natural environmental driving factors at the
+national/regional scale. A self-adaptive inertia and competition me-
+chanism is developed within the CA model to process the complex
+competitions and interactions among the different land use types. The
+general structure of the FLUS model is illustrated in Fig. 1.
+2.1. Land use demand projection using system dynamics (SD)
+The SD model is an effective approach for modeling the nonlinear
+behavior of complex systems over time by using stocks, flows, internal
+feedback loops and time delays (Coyle, 1997). It can be used to un-
+derstand and predict the evolution of a complex system through the
+feedback and interactions among different elements. Currently, the SD
+model is widely used in policy making and analysis throughout the
+public and private sectors (Costanza& Ruth, 1998; Haghani,
+Lee, &Byun, 2003).
+In this study, we developed an SD model to project the multiple land
+use demands under different scenarios by considering both human ac-
+tivities and natural ecological effects. The interactions and feedback of
+the developed SD model are presented in Fig. 2. The developed SD
+model consists of four sectors: population, economy, climate and land
+use. The population sector is essential, since it will cause consequential
+variations in the other sectors. The economy sector has strong influ-
+ences on population and land use, as GDP (gross domestic product)
+affects the change in the fixed-asset investments, thereby driving the
+economic investment in various land use types. As mentioned above,
+the background climate conditions have a long-term effect on altering
+the natural landscape dynamics; thus, the climate sector (annual pre-
+cipitation and temperature) is also included in the SD model. Variations
+in temperature are assumed to have various influences on the growth
+and regeneration capacity of cultivated land, forest land and grassland.
+Similarly, appropriate increases in precipitation are sufficient to meet
+the water requirements of vegetation, leading to changes in cultivated
+land, forest land and grassland. In total, six land use types are con-
+sidered in the land use sector: urban land, cultivated land, grassland,
+forest, water area and unused land. The changes in each land use type
+are constrained by the integrated influences of socio-economic and
+climate conditions as well as by the interactions among the various land
+use types. For example, urban land is estimated by multiplying the
+urban population by the GDP value, which directly affects the changes
+in cultivated land and water area. Moreover, the forest and grassland
+areas are estimated by the socio-economic factors and climate condi-
+tions, such as precipitation and temperature. This SD component pro-
+vides a convenient way to capture the major impacts of the socio-eco-
+nomic and climate changes on the land use demands in China.
+2.2. Land use change simulation using cellular automata (CA)
+The multiple CA allocation model is developed to simulate the fu-
+ture spatial pattern under the given land use demands determined by
+the SD model. The CA simulation is implemented in two steps: 1) an
+Fig. 1. The framework of the proposed FLUS model.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+96
+artificial neural network is used to train and estimate the probability-of-
+occurrence of each land use type on a specific grid cell, and 2) an
+elaborate self-adaptive inertia and competition mechanism is designed
+to address the competition and interactions among the different land
+use types. Through these two steps, the combined probabilities of all the
+land use types at each specific grid cell are estimated, and the dominant
+land use type is allocated to this grid cell during the CA iteration. In the
+allocation process, a specific land grid either retains the current land
+use type or transforms into another type depending on their combined
+probabilities and the roulette selection (as described in detail below). A
+schematic framework of the CA allocation model is presented in Fig. 3.
+2.2.1. Probability-of-occurrence estimation using artificial neural networks
+Artificial neural networks (ANNs) are a family of machine learning
+models inspired by biological neural networks (e.g., the human brain)
+and are typically used to estimate or approximate non-linear functions
+that are dependent on many inputs (independent variables). The ad-
+vantage of ANNs is that they are capable of learning and fitting complex
+relationships between input data and training targets through a number
+of learning-recall iterations (Li&Yeh, 2002). ANNs have been suc-
+cessfully applied to the analysis and modeling of various non-linear
+geographical problems (Openshaw, 1998). It is well accepted that ANNs
+are able to achieve promising performance when modeling a large
+number of inputs and outputs (Wang, 1994).
+In general, an ANN with multiple input and output neurons consists
+of three layer types: an input layer, a hidden layer and an output layer
+(Fig. 4). In the input layer, each neuron corresponds to an input vari-
+able, e.g., independent spatial variables, socio-economic variables and
+natural climate variables in the CA model. It can be mathematically
+expressed as
+= … x x x X [ , , , ]
+n
+T
+1 2
+(1)
+where x i is the i th neuron in the input layer. In the hidden layer, the
+signal received by neuron j from all the input neurons on grid cell p at
+time t is estimated according to the following equation:
+∑ = × net p t w x p t ( , ) ( , ) j
+i
+i j i ,
+(2)
+where net p t ( , )
+i
+is the signal received by neuron j in the hidden layer;
+x p t ( , )
+i
+is the ith variable associated with the input neuron i on grid cell
+p at training time t; and w i,j is an adaptive weight between the input
+layer and the hidden layer, which is calibrated during the training
+process. The connection between the hidden layer and the output layer
+is determined by an activation function. The sigmoid activation func-
+tion is effective for building the connection between the hidden layer
+and the output layer, which is estimated as follows:
+=
++
+−
+net
+e
+sigmoid( (p, t))
+1
+1
+j
+net p t ( , )
+j (3)
+Each neuron in the output layer corresponds to a specific land use
+type. The value of the lth neuron in the output layer will generate a
+value that represents the probability-of-occurrence for the lth land use
+type at the grid cell. A higher value indicates that the specific grid cell
+has a higher probability-of-occurrence for the target land use type. The
+probability-of-occurrence of land use type k on grid cell p at training
+time t is denoted as P p k t ( , , ) and is estimated according to the fol-
+lowing equation:
+∑ ∑ = × = ×
++
+−
+w sigmoid net p t w
+e
+p(p,k,t) ( ( , ))
+1
+1
+j
+j k j
+j
+j k
+net p t
+, ,
+( , )
+j
+(4)
+where w j,k is an adaptive weight between the hidden layer and the
+output layer, and similar to w i,j , it is calibrated during the training
+process. After both w i,j and w j,k are trained and calibrated using the
+training dataset, the ANN model is built and can be used to estimate the
+probability-of-occurrence for each land use type in a specific grid cell.
+2.2.2. Self-adaptive inertia and competition mechanism
+The ANN model was developed to establish the relationship be-
+tween the probability-of-occurrence surface for a specific land use type
+Fig. 2. The interactions and competition of different land use types driven by human and natural factors in the system dynamics.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+97
+and the given spatial factors. Similar to previous large-scale simulation
+models, such as CLUE-S (Verburg, Schulp, Witte,& Veldkamp, 2006),
+LUS (Letourneau, Verburg, &Stehfest, 2012), and CLUMondo (Van
+Asselen &Verburg, 2013), this relationship is assumed to remain rela-
+tively unchanged over the study period due to the essential nature of
+the land use. Whether a land grid will be developed into a specific land
+use type depends not only on the probability-of-occurrence but also on
+other variable components accounting for different development sta-
+tuses over the prediction period. Thus, in the proposed model, we in-
+corporate the probability-of-occurrence with the conversion cost,
+neighborhood condition and competition among the different land use
+types to estimate the combined probability for each land grid. More-
+over, the interactive coupling of the top-down SD demand and the
+bottom-up CA model enhances the model’s capability for long-term si-
+mulation.
+2.2.2.1. Neighborhood effects. The neighborhood development density
+effect considered in this study is similar to that of traditional CA
+models. At a specific grid cell p, the neighborhood development density
+for land use type k is defined as
+∑
+=
+=
+× −
+×
+×
+−
+con c k
+N N
+w Ω
+( )
+1
+p k
+t N N
+p
+t
+k ,
+1
+(5)
+In this equation, ∑ =
+×
+−
+con c k ( )
+N N
+p
+t 1
+represents the total number of
+grid cells occupied by the land use type k at the last iteration time t − 1
+within the N × N window. w k is the variable weight among the dif-
+ferent land use types because there are different neighborhood effects
+for different land use types. The neighborhood weight value for each
+land use type is determined based on expert knowledge and a series of
+model tests. The final neighborhood weight for each land use type is
+illustrated in Table 3.
+Fig. 3. The schematic framework of the Cellular Automata (CA) local allocation.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+98
+2.2.2.2. Inertia coefficient. The most important factor in the proposed
+model involves the competition and interaction of different land use
+types during the multiple CA evolution iterations. A self-adaptive
+inertia should be used to represent the inheritance of previous land
+use types. A self-adaptive inertia coefficient for each land use type is
+thus defined to auto-adjust the inheritance of the current land uses on
+each grid cell according to the differences between the macro demand
+and the allocated land use amount. The core idea is that if the
+developing trend of a specific land use type contradicts the macro
+demand, the inertia coefficient would dynamically increase the
+inheritance of this land use type to rectify the land use trajectory in
+the next iteration. For example, if future planning requires more
+cultivated land, whereas the allocation of the cultivated land
+decreases in the last iteration, the inertia coefficient will increase to
+preserve additional cultivated land and to promote the conversion of
+other land use types to cultivated land. The inertia coefficient is defined
+as:
+=
+⎧
+⎨
+⎪
+⎩
+⎪
+≤
+× < <
+× < <
+− − −
+− − −
+− − −
+−
+−
+−
+−
+D D
+D D
+D D
+Intertia
+Intertia if
+Intertia if 0
+Intertia if 0
+k
+t
+k
+t
+k
+t
+k
+t
+k
+t
+D
+D
+k
+t
+k
+t
+k
+t
+D
+D
+k
+t
+k
+t
+1 1 2
+1 1 2
+1 2 1
+k
+t
+k
+t
+k
+t
+k
+t
+2
+1
+1
+2
+(6)
+where Inertia k
+t
+denotes the inertia coefficient for land use type k at
+iteration time t.
+−
+D k
+t 1 denotes the difference between the macro demand
+and the allocated amount of land use type k until iteration time t − 1.
+Note that the inertia coefficient is defined with respect to the current
+land use type occupying the grid cell. Thus, if the considered land use
+type k is not the current land use, then the inertia coefficient of land use
+type k will be set to 1, and it will not alter the combined probability of
+land use type k for this grid cell. According to Eq. (6), the inertia
+coefficient is defined based on three different situations: 1) If the
+developing trend of the specific land use type k meets the macro
+demand, i.e., ≤
+− −
+D D
+k
+t
+k
+t 2 1
+, then the inertia coefficient at iteration
+time t will remain unchanged. 2) If the macro demand for the specific
+land use type k is less than the current allocation amount, and the
+developing trend of land use type k contradicts the macro demand, i.e. ,
+then the inertia coefficient at iteration time t will decrease slightly by
+multiplying the previous coefficient by
+− −
+D D /
+k
+t
+k
+t 2 1 . 3) If the macro
+demand for the specific land use type k is greater than the current
+allocation amount and the developing trend of land use type k
+contradicts the macro demand, i.e., < <
+− −
+D D 0
+k
+t
+k
+t 2 1 , then the inertia
+coefficient at iteration time t will increase slightly by multiplying the
+previous coefficient by
+− −
+D D /
+k
+t
+k
+t 1 2 . Through the dynamic tuning of the
+inertia coefficients for all land use types in the CA iteration, the
+allocations of different land use types compete with each other,
+resulting in a scenario where all the land use allocations match the
+macro land use demands.
+2.2.2.3. Conversion cost. The conversion cost, which indicates the
+conversion difficulty from the current land use type to the target
+type, is another factor shaping the land use dynamics
+(Aerts&Heuvelink, 2002; Huang, Liu, Li, Liang, &He, 2013). Similar
+parameters analogous to the conversion cost have been used in some
+large-scale LUCC simulation models, such as the CLUE-S (Verburg et al.,
+2002), FORE_SCE (Sohl &Sayler, 2008), and CLUMondo (Van
+Asselen &Verburg, 2013) models. These models predefine a group of
+static experience-based parameters for a specific region that denotes the
+Fig. 4. Basic structure of an artificial neural network
+with multiple inputs and outputs.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+99
+conversion difficulty.
+The conversion cost defined in this paper is a brief summary of the
+difficulty for a specific land grid to change from one land use type to
+another. It is estimated based on an analysis of the historical land use
+data in the study area and regional expert opinions. It reflects the in-
+trinsic attributes of land uses without considering the changeable in-
+fluences, such as technological progress and human activities. Thus, the
+conversion cost remains unchanged in the proposed model. Other
+changeable factors are reflected by the neighborhood effects, the inertia
+coefficient and the interactive integration with the system dynamic
+model, which will continue to vary over the study period. The con-
+version costs are different for individual land use types. For example,
+the cost of converting urban land into grassland is relatively high, while
+the cost of converting agricultural land to urban construction land is
+relatively low. For each land use pair c and k, the cost of the land use
+change from c to k is denoted as sc c→k . In this study, the conversion cost
+of each land use pair is determined based on local expert experience
+and urban planners (Table 1). The value of the conversion cost sc c→k
+varies between the range of [0,1]. Larger values indicate a greater
+conversion difficulty, and a value of 1 means that the conversion is
+nearly impossible. We have also developed a sensitivity analysis for
+testing the model sensitivity to conversion cost in Section 4.
+2.2.2.4. Roulette selection. By considering the probability-of-
+Table 1
+Conversion cost of land use pairs.
+Land use types Cultivated land Forest land Grass land Water area Urban land Unused land
+Cultivated land 0 0.9 0.1 0.8 0.1 0.4
+Forest land 0.7 0 0.3 0.99 0.99 0.8
+Grass land 0.5 0.8 0 0.4 0.3 0.1
+Water area 0.9 0.9 0.9 0 0.99 0.5
+Urban land 1 1 1 1 0 1
+Unused land 0.9 0.99 0.5 0.8 0.3 0
+Fig. 5. Schematic diagram of the roulette selection mechanism.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+100
+occurrence, neighborhood effect, inertia coefficient and conversion
+cost, the combined probability of a cell being occupied by a specific
+land use type is estimated using the following equation:
+= × × × −
+→
+TP P Inertia sc Ω (1 )
+p k
+t
+p k p k
+t
+k
+t
+c k , , , (7)
+where TP p k
+t
+,
+denotes the combined probability of grid cell p to covert
+from the original land use type to the target type k at iteration time t;
+P p,k denotes the probability-of-occurrence of land use type k on grid cell
+p; Ω p k
+t
+,
+denotes the neighborhood effect of land use type k on grid cell p
+at iteration time t; inertia k
+t
+denotes the inertia coefficient of land use
+type k at iteration time t; and sc c→k denotes the conversion cost from the
+original land use type c to the target type k.
+After estimating the combined probability for each iteration time,
+the CA simulation will determine whether a grid cell is converted or
+not. If it is converted, the simulation will determine which land use type
+will occupy the grid cell in the next iteration. In most previous models,
+such as CLUE-S, the land use type of a specific grid cell is simply allo-
+cated to the dominant cell with the highest conversion probability
+(Verburg et al., 2002). Other studies used pre-defined thresholds to
+control the conversion rate by comparing the highest conversion
+probability and the threshold (Li& Yeh, 2002). These methods only
+consider the dominant land use type and disregard the competition
+with other land use types, thereby eliminating allocation opportunities
+for non-dominant land use types.
+Undoubtedly, the dominant land use type with the highest com-
+bined probability is the priority for grid cell allocation, but the other
+land use types with relatively lower combined probabilities still have a
+chance to be allocated, even though the chances are small. To achieve
+this, we propose the use of a roulette selection mechanism to determine
+which land use type will occupy the grid cell. The probability of a land
+use being allocated is proportional to its combined probability. A
+schematic diagram of the roulette selection mechanism is shown in
+Fig. 5. For a specific grid cell p at iteration time t, the combined
+probability of each land use type is estimated according to Eq. (7), after
+which a roulette wheel is constructed according to the combined
+probabilities of all the land use types. Each sector of the roulette wheel
+is represented by a land use type. The area of a sector is proportional to
+its combined probability. Then, a uniformly distributed random number
+ranging from 0 to 1 is generated, and based on the associated sector of
+the random number, the corresponding land use type is allocated to the
+grid cell in the current iteration. Through this roulette selection me-
+chanism, a land use type with a higher combined probability is more
+likely to be selected as the occupying land use, and those with relatively
+lower combined probabilities still have a chance to be allocated. In
+addition, the stochastic characteristics of this mechanism enable the
+model to reflect the uncertainty of real-world LUCC dynamics, ex-
+tending its applicability to the leapfrog-grown land use simulations.
+2.3. Integration of the SD model with the multiple CA model
+In the proposed FLUS model, the top-down SD demand projection
+model and the bottom-up CA local allocation model are not loosely
+coupled via the final land use demands as with many integrated models.
+Instead, analogous to Syphard’s study (Syphard, Clarke, &Franklin,
+2007), they are interactively (tightly) coupled through individual land
+use quantities during the study time series. To strengthen the mutual
+feedback between the SD and CA sub-models, the study period was
+divided into several intervals during which these two sub-models
+evolved collaboratively. The projected land use demand derived from
+the SD model in the previous time node was used as an input for the CA
+model to simulate the land use pattern in the current time node, and
+this simulation, together with other driving factors, was used to project
+the land use demand to the next time node using the SD model. This
+input-output mutual feedback continues and finally generates the land
+use pattern at the end of the simulation period.
+A schematic diagram of the coupling mechanism is illustrated in
+Fig. 6. We use the period of 2010–2050 as an example to explain the
+coupling mechanism. The 40-year period was divided into four inter-
+vals: 2010–-2020, 2020–2030, 2030–2040, and 2040–2050. At the
+beginning and end of each time interval, the SD and CA models would
+exchange input/output information. The demand of all the land use
+types in 2020 is projected through the configured SD model using the
+actual land use pattern in 2010 and the influence of both human and
+natural factors during this time interval. Then, the trained multiple CA
+model simulates the local competition and interactions iteratively and
+generates the land use pattern in 2020, which meets the projected de-
+mand derived from the SD model. Subsequently, a newly configured SD
+model adjusted by the simulated land use pattern in 2020 is used as a
+feedback to project the demand for 2030. Then, the CA model se-
+quentially simulates the land use pattern from 2020 to 2030. The mu-
+tual feedback between the SD model and CA model continues and, fi-
+nally, collaboratively generates the land use pattern in 2050 for
+different scenarios. Based on this interactive coupling approach, we
+developed the GeoSOS-FLUS software as an extension to our previous
+Fig. 6. Interactive coupling mechanism of the SD model and multiple CA model.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+101
+GeoSOS software (Li et al., 2011) to facilitate the multiple land use
+change simulations under human-natural-included scenarios (available
+for free download at http://www.geosimulation.cn/flus.html).
+3. Land use simulations for mainland China during 2000–2010
+The applicability of the proposed FLUS model was first tested by
+LUCC simulations of mainland China during 2000–2010. China is the
+second largest country in the world, covering an area of 9.6 million
+square kilometers with various landscape patterns. In the past two
+decades, China has undergone significant urban expansion due to its
+rapid economic development and population increases, and significant
+urbanization processes are expected to continue in the coming decades
+(Chen, Liu, &Tao, 2013). It is very important for decision-makers to
+predict future land use changes under different planning scenarios and
+to evaluate the influences of both human activities and climate change
+on the LUCC dynamics.
+3.1. Data preparation and model configuration
+Considering the significant differences regarding the climate and
+ecosystem characteristics across the vast region of mainland China, we
+divided the study area into four major ecological regions (Fu, Liu, Chen,
+Ma, &Li, 2001) (Fig. 7): the northeast humid and semi-humid (NHSH)
+region, the northern arid and semi-arid (NASA) region, the southern
+humid (SH) region, and the Tibetan Plateau (TP) region. The spatial
+dataset used to build and train the proposed model is listed in Table 2,
+including historical and current land use patterns, terrain conditions
+(elevation and slope), socio-economic and positional data (population,
+GDP, city site and road network), climatic and ecological factors (soil
+quality, temperature and precipitation) and future climate variations.
+All of the spatial datasets were resampled to the same resolution of
+1 × 1 km 2 .
+The application of the FLUS model in China includes six land use
+types: cultivated land, forest land, grassland, water area, urban land
+and unused (barren) land (including sandy land, Gobi, salina,
+swampland, bare soil, bare rock, alpine desert and tundra). A total
+of 15 spatial driving factors that were derived from the original
+datasets listed in Table 2 and normalized to the range of [0,1] were
+selected to establish the ANN model for the probability-of-occur-
+rence estimation for each land use type. The ANN model is designed
+to have 15 neurons in the input layer (corresponding to 15 spatial
+driving factors) and 6 neurons in the output layer (corresponding to
+6 land use types). The log-sigmoid function is selected as the model
+transfer function to ensure the estimated probability values fall
+within [0,1]. The mean square error (MSE) is used as the objective
+function in the back-propagation (BP) training process. The training
+process stops when the MSE is less than 0.001. In the FLUS model,
+we used the 5 × 5 extended Moore neighborhood to represent the
+neighborhood space. The neighborhood weights for individual land
+use types in different ecological regions are illustrated in Table 3.
+The initial inertia coefficients for the first iteration are set to 1 for
+all land use types and will subsequently evolve according to Eq. (6)
+during the CA iteration.
+Fig. 7. Study area and the four divided ecological regions.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+102
+3.2. Model implementation and validations
+The applicability of the proposed model was tested by simulating
+future LUCCs in China. A total of 500 thousand samples were randomly
+selected across the Chinese territory; 70% of the samples (training set)
+were used to train the model, and the remaining 30% (validation set)
+were used to quantitatively assess its performance. The demands of the
+six land use types in 2010 were projected using the SD model (http://
+vensim.com/vensim-software/) based on the land use pattern in 2000
+as well as the socio-economic factors and environmental tendencies
+from 2000 to 2010. The spatial evolution of multiple land uses from
+2000 to 2010 was subsequently simulated to meet the given land use
+demands derived from the SD model. The FLUS model performance is
+assessed based on three aspects: the fit of the ANN model to the prob-
+ability-of-occurrence, the agreement between the simulation result and
+the actual land use pattern, and a comparison with the current simu-
+lation models.
+3.2.1. Validation of ANN performance
+The Receiver Operating Characteristic (ROC) curve and the Area
+Under ROC Curve (AUC) values (Hanley&McNeil, 1982) were used to
+quantify the ANN model performance in terms of fitting the individual
+land use probability-of-occurrence. The ROC is an effective tool for il-
+lustrating the performance of a binary classifier system, due to its
+variable discrimination threshold. The ROC curve is created by plotting
+the true positive rate (TPR, known as the sensitivity in machine learning)
+against the false positive rate (FPR, estimated with 1 − specificity) at
+various threshold selections. A larger area under the ROC curve (AUC
+value) corresponds to a better model fitting performance. Generally, a
+completely random model yields an AUC value of 0.5, and a perfectly
+fitting result yields an AUC value of 1.0. Fig. 8 shows the ROC curves of
+six land use types in red and the random guess curves in green. The AUC
+values of each land use type were estimated according to the ROC
+curves. We found that the AUC values of cultivated land, grassland and
+water area were larger than 0.8, and the AUC values of the forest land,
+urban land and unused land were greater than 0.9. Such promising AUC
+values indicate that the probability-of-occurrence fit for the individual
+land uses can be well explained by the selected driving factors.
+3.2.2. Comparison with other studies
+The spatial land use simulation in 2010 and the actual land use
+pattern of 2010 are shown in Fig. 9, with three partial enlargements to
+display more details of the simulated results. The figure shows that the
+simulated pattern is well correlated with the actual pattern at the na-
+tional scale. The enlarged views of three select regions also show high
+spatial consistencies for the six land use types. To quantitatively assess
+the simulated result, samples in the test set were used to build the grid-
+by-grid confusion matrix of the simulated result versus the actual land
+use pattern (Table 4), from which the overall accuracy and the Cohen’s
+Kappa coefficient for all land use types were calculated. In addition, the
+agreement of the changes was validated using the figure of merit (Fom),
+which is superior to the Kappa coefficient in assessing the accuracy of
+simulated changes (Pontius &Millones, 2011; Pontius et al., 2008). This
+index can be expressed as the following equation:
+Table 2
+List of data used in this study.
+Category Data Year Resolution Data resource
+Land use Land use data 2000–2010 30m CAS (http://www.resdc.cn)
+Human influence Population 2010 0.5′ LandScan 2010 Global Population Project
+GDP 2010 1 km CAS (http://www.resdc.cn)
+City site 2014 1 km World Urbanization Prospects: The 2014 Revision, CD-ROM Edition.
+Road network 2010 1 km NASA, Socioeconomic Data and Applications Center, Global Roads Open Access Data Set (gROADS),
+v1
+Terrain DEM 2000 0.5′ WorldClim version 1.4 (http://www.worldclim.org/)
+Slope 2000 0.5′ Calculated from DEM
+Soil Nutrient availability 2008 5′ Har monized World Soil Database v 1.2 (http://webarchive.iiasa.ac.at/Research/LUC/External-
+World-soil-database/HTML/SoilQuality.html?sb=10) Oxygen availability to
+roots
+Excess salts.
+Workability
+Climate Annual Mean Temperature 2000 0.5′ WorldClim version 1.4 (http://www.worldclim.org/)
+Temperature Seasonality
+Temperature Annual
+Range
+Annual Precipitation
+Precipitation Seasonality
+Future Climate Annual Mean Temperature 2010–2050 0.5° World Data Climate Center (http://cera-www.dkrz.de/WDCC/)
+Annual Precipitation
+Subarea Ecological Zones 2001 Vector Fu et al. (2001)
+Table 3
+The neighborhood weights for individual land use type in different ecological regions.
+Ecological regions Cultivated land Forest land Grassland Water area Urban land Unused land
+The NASA region 0.5 0.1 0.2 0.1 1 0.3
+The NSHS region 1 0.03 0.01 0.2 1 0.1
+The SH region 0.2 0.01 0.3 0.4 1 0.5
+The TP region 1 0.1 0.5 0.1 1 0.2
+Note:.
+NASA: the Northern Arid and Semi-Arid region.
+NHSH: the Northeast Humid and Semi-Humid region.
+SH: the Southern Humid region.
+TP: the Tibetan Plateau region.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+103
+=
++ + +
+B
+A B C D
+Fom
+(8)
+where A is an area of error due to observed change predicted as per-
+sistence, B is an area of accuracy due to observed change predicted as
+change, C is an area of error due to observed change predicted as
+changing to an incorrect category, and D is an area of error due to
+observed persistence predicted as change.
+For the accuracy assessment results, all three accuracy indexes are
+intermediate (the overall accuracy is 0.75, the Kappa coefficient is 0.67
+and the Fom is 19.62%). Although a Fom value of 19.62% is not highly
+accurate, we believe it is acceptable for the Chinese region from 2000 to
+2010 for the following reasons: 1) The Fom value of 19.62% has a similar
+range compared to the other simulation study results. For example, the
+Fom values range from 12% to 18% for the urban land-use dynamic
+modeling in the study by Chen, Li, Liu, and Ai (2014). Pontius et al.
+(2008) also reported a Fom range from 1% to 59% (most of the values
+are lower than 30%). 2) Pontius et al. (2008) reported a positive re-
+lationship between the Fom and observed net change. Due to this re-
+lationship, the Fom value of a long-period simulation result is most likely
+higher than one with a short period. (Estoque&Murayama, 2012a). In
+this article, our simulation period is relatively short (2000–2010), with a
+17.38% observed net change, which is shorter compared to studies that
+have a relatively high Fom (Chen, Li, Liu, Ai,&Li, 2016;
+Estoque&Murayama, 2012b). Considering that our study area is a large
+region with complex climatic conditions and significant regional differ-
+ences, the simulation accuracy is quite acceptable for the multiple land
+use simulations. The accuracy assessment indicates that the FLUS model
+is capable of tracing the spatial dynamics trajectories of multiple LUCCs
+in China with a relatively favorable accuracy.
+To demonstrate the superiority of the proposed method over the
+existing multiple LUCC simulation models, we compared the perfor-
+mance of the proposed method to that of three well-accepted models:
+the Logistic-CA model (Li et al., 2013; Wu, 2002), the traditional ANN-
+CA model (Li&Yeh, 2002), and the CLUE-S model (Verburg et al.,
+2002). The Logistic-CA model predicts future land-use based solely on
+the neighboring land-uses and the same driving factors that are con-
+sidered in the paper. The traditional ANN-CA model is typically applied
+to the simulation of multiple LUCCs via the integration of neural net-
+works with cellular automata, but it does not consider the interaction
+and competition of different land use types. Moreover, the traditional
+CA model requires two sets of land use pattern data for fitting the
+transition probability from one land use type to another for the given
+driving factors, which inevitably introduces error propagation from the
+multiple land use classifications. Other simulation models use only one
+land use set to fit the probability-of-occurrence for specific land use
+types, such as the CLUE-S, DynaCLUE, CLUMondo and FORE-SCE
+models. The CLUE-S model selected in the comparison is a well-ac-
+cepted multiple LUCC simulation model that uses empirically quanti-
+fied relationships between land use and its driving factors in combi-
+nation with dynamic modeling. However, the CLUE-S model estimates
+the probability-of-occurrence for each land use type separately, so it
+does not sufficiently address the competition among the different land
+use types.
+In the comparative study, we applied the proposed FLUS model, the
+Logistic-CA model, the traditional ANN-CA model and the CLUE-S
+model to the Pearl River Delta (PRD) region of China to simulate the
+land use pattern from 2000 to 2010 at a spatial resolution of
+250 × 250 m 2 . For the FLUS method, we divided the study period into
+Fig. 8. ROC curves and AUC values of individual land use types fitted by the ANN.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+104
+two intervals, 2000–2005 and 2005–2010, during which the interactive
+coupling mechanism could be applied. An additional experiment in
+which the SD model was directly coupled to the CA model (2000–2010)
+was performed and compared to the proposed method to show the ef-
+fectiveness of the interactive coupling mechanism.
+The actual 2010 land use patterns and the simulation results of the
+five different methods are shown in Fig. 10. Even though all four
+models are capable of simulating multiple land use dynamics, the
+simulated patterns are slightly different from each other. Using urban
+land as an example, the ANN-CA model generates a relatively dispersed
+pattern compared to the actual observations, whereas the CLUE-S
+model tends to yield a relatively compact pattern. The pattern gener-
+ated by the Logistic-CA model is more compact than that of the ANN-CA
+model but is more dispersed than the CLUE-S model pattern and con-
+tains additional urban enclaves. Both the direct coupling and inter-
+active coupling FLUS models, however, were capable of simulating
+Fig. 9. The simulated land use pattern and the actual land use pattern in 2010.
+Table 4
+Confusion matrix of the predicted land use pattern versus the actual pattern in 2010.
+Land use types Actual land use in 2010
+Cultivated land Forest land Grasslands Water area Urban land Unused land total
+Cultivated land 101,521 15,891 8033 2656 7207 1060 136,368
+Forest land 16,592 131,553 12,349 949 488 1472 163,403
+Grasslands 8723 12421 65,814 737 402 7583 95,680
+Water area 1670 579 903 7878 318 1542 12,890
+Urban land 5698 1443 615 460 8826 84 17,126
+Unused land 1765 993 7930 647 163 52,977 64,475
+total 135,969 162,880 95,644 13,327 17,404 64,718 489,942
+Kappa Coefficient = 0.67, Overall Accuracy = 0.75.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+105
+more-realistic land use patterns that are neither too dispersed nor too
+compact. This favorable peculiarity is likely contributed by the pro-
+posed self-adaptive inertia and competition mechanism that was
+designed to address the complex local land use interactions and com-
+petitions. To quantitatively assess the overall performances of the four
+models, a total of 5000 samples were randomly selected across the PRD
+Fig. 10. Comparison of simulated land use pattern in the PRD region of China by using the Logistic-CA model, ANN-CA model, the CLUE-S model and the FLUS model (loose-coupling and
+tight-coupling).
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+106
+region, from which the overall accuracy and the Cohen’s Kappa coef-
+ficient were estimated. The Kappa coefficient only evaluates the overall
+consistency of the simulation results compared to the actual land use
+pattern and is unable to accurately incorporate information from recent
+changes. Therefore, we also used the Fom method to measure the ac-
+curacy of the land use changes in the comparison study. With the Fom
+statistics, the previously established land-uses (unchanged cell in 2000
+land use) can be completely excluded from the validation, and the
+comparison between these models is entirely based on the recent
+change (land use change between 2000 and 2010).
+The overall accuracy of the proposed method (∼0.8470) is sig-
+nificantly higher than that of the CLUE-S model (∼0.8092), the ANN-
+CA model (∼0.7866), and the Logistic-CA model (∼0.7680). Similarly,
+the Kappa coefficient of the proposed method (∼0.7963) is better than
+that of the CLUE-S model (∼0.7682), the ANN-CA model (∼0.7332),
+and the Logistic-CA model (∼0.7100). Moreover, the ‘Figure of merit’
+(Fom) indicator was calculated to evaluate the land use change accu-
+racy. For the FLUS model results, the Fom value is 12.46%, which is
+higher than the values of the other models (ranging from 9.09% to
+10.55%).
+3.2.3. Examining the integration of SD and CA
+A comparison between the simulation results of FLUS (Tight-cou-
+pling) and FLUS (Loose-coupling) indicates that the former yielded a
+slightly better overall accuracy (0.8470 versus 0.8211), Kappa coeffi-
+cient (0.7963 versus 0.7863) and Fom statistics (12.46% versus
+11.53%) compared to the loose-coupling FLUS model. These
+comparisons showed that the proposed FLUS model performs better
+than the existing models for multiple land use dynamic simulations, and
+the integration between SD and CA yields a better simulation result
+with higher simulation accuracy. Although the improvement is not very
+significant, it does illustrate the effectiveness of the integration me-
+chanism.
+3.3. Model sensitivity to conversion cost
+The conversion cost in this article is similar to the transition matrix
+used by many other models (Schaldach et al., 2011; Verburg et al.,
+2002); however, it acts as an extension and is more detailed than the
+conventional transition matrix. Here, we examine the model sensitivity
+to the conversion cost in the Pearl River Delta (PRD) region of China.
+We compare the model performance of three simulation results that
+separately apply 1) a conversion cost that allows all conversions, 2) a
+rigid conversion cost (see Table 5) and 3) a flexible conversion cost to
+the FLUS model simulation (see Table 1).
+For a conversion cost that allows all conversions, all values are as-
+sumed to be 0, which indicates that all land use pair conversions are
+possible and at zero cost. The rigid conversion cost shown in Table 5
+has been widely used by many other studies (Schaldach et al., 2011;
+Verburg&Overmars, 2009), but it only defines whether a conversion
+between one land use type and another is possible. A value of 1 denotes
+that a conversion is not allowed, and a value of 0 denotes that a con-
+version is possible in a rigid conversion cost matrix. The flexible con-
+version cost used in this article is defined based on the rigid conversion
+Table 5
+Rigid conversion cost of land use pairs for sensitivity analysis.
+Land use types Cultivated land Forest land Grass land Water area Urban land Unused land
+Cultivated land 0 0 0 0 0 0
+Forest land 0 0 0 1 1 0
+Grass land 0 0 0 0 0 0
+Water area 0 0 0 0 1 0
+Urban land 1 1 1 1 0 1
+Unused land 0 1 0 0 0 0
+Fig. 11. Sensitivity analysis: region a, b are example areas to zoom in on. (a1), (b1): Land use map generated by allowing all conversions; (a2), (b2): Land use map generated by using
+rigid conversion cost; (a3), (b3): Land use map generated by using flexible conversion cost; and (a4), (b4): Actual land use pattern in 2010.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+107
+cost, which has been described in detail in Section 2.
+When allowing all land use pair conversions, the results of the Fom
+value, the overall accuracy and the Kappa coefficient were 10.57%,
+0.7976, and 0.7470, respectively. All of the accuracy indexes are higher
+than the results projected by the ANN-CA model (Fom = 9.14%,
+Overall accuracy = 0.7866, and Kappa coefficient = 0.7332) and the
+Logistic-CA model (Fom = 9.09%, Overall accuracy = 0.7680, and
+Kappa coefficient = 0.7100) but are slightly lower than the CLUE-S
+model for the overall accuracy and Kappa coefficient (Fom = 10.55%,
+Overall accuracy = 0.8066, and Kappa coefficient = 0.7582). Under
+such circumstances, the isolated cultivated patches surrounded by
+forest and the forest parcels circled by urban areas can more easily be
+converted to other land uses in this pattern (example in Fig. 11a1, b1).
+This phenomenon can be suppressed, and a higher-accuracy simulation
+pattern can be generated by using a rigid conversion cost
+(Fom = 12.37%, Overall accuracy = 0.8332, and Kappa coeffi-
+cient = 0.7915). Fig. 11 also shows that the distinctions between the
+other two simulation patterns are insignificant, but all the accuracy
+indexes are improved by using a flexible conversion cost (Fig. 11,a3,
+b3) instead of the rigid conversion costs (Fig. 11, a2, b2). The Fom
+value is improved to 12.46%, the overall accuracy is increased to
+0.8470, and the Kappa coefficient is increased to 0.7963.
+The sensitivity analysis indicates that the simulation results of the
+FLUS model are not very sensitive to the flexible conversion cost var-
+iations if the rigid conversion cost has been properly set; however,
+appropriate conversion cost values improve the simulation accuracy.
+Notably, an inappropriate rigid conversion cost can have relatively
+large negative effects on the model performance. Hence, the FLUS
+model still relies on expert judgment and model calibrations.
+4. Scenario simulation of future LUCC in China for 2010–2050
+4.1. Scenario description and parameterization
+Before simulating the future land use dynamics, the demands for
+each land use type should be projected. By using the SD model, we
+investigated the influence of multiple driving force variables (economic
+development, population growth, technological innovation and climate
+change) on land use demands in different scenarios from 2010 to 2050.
+Four scenarios are designed based on the IPCC assessment reports (Sohl
+et al., 2012) while considering regional climate variations together with
+different socio-economic developments in China. As shown in Fig. 12,
+four scenarios are designed and organized along two axes, with the
+vertical axis representing human influence and the horizontal axis re-
+presenting the natural environment. Each scenario is characterized by a
+range of alternative future conditions regarding human influence and
+the natural environment.
+The baseline development scenario (BD_Scenario) is constructed
+based on the trajectory of past and current development in China. The
+current trends for economic and population development and techno-
+logical innovation are assumed to remain continually consistent.
+Moreover, the climate is assumed to maintain its current temperature
+and precipitation rates (B1 climate scenario in the IPCC report). The
+fast development scenario (FD_Scenario) is designed to maximize the
+socio-economic benefits in China. The economy and population in-
+crease at a high speed, and science and technology develop rapidly.
+Additionally, intense climate change occurs in this scenario with sharp
+temperature and precipitation increases due to massive human activ-
+ities accelerating greenhouse gas emissions and exacerbating
+Fig. 12. Configurations of four development scenarios with regard to human and natural effects.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+108
+precipitation heterogeneity (A2 climate scenario in the IPCC report).
+Contrary to the FD_Scenario, the slow development scenario
+(SD_Scenario) is constructed to predict the land use demands under the
+influence of slow socio-economic growth and moderate climate change.
+The GDP growth rate, population growth rate, and technological in-
+novations are assumed to be at the lowest levels in this scenario. In
+addition, the scenario is assumed to rarely experience extreme weather
+events and has slow annual temperature and precipitation changes
+(commitment climate scenario in the IPCC report). Lastly, the harmo-
+nious development scenario (HD_Scenario) is a more human-oriented
+and sustainable development mode. Steady population growth and
+moderate development-oriented economic growth are considered in
+this scenario, and the proportion of technological investments is as-
+sumed to have more input in agricultural productivity. Moreover, the
+natural environment will change moderately (A1B climate scenario in
+the IPCC report), which is assumed to have a positive impact on land
+use changes in this scenario.
+To parameterize these scenarios into the SD model for projecting the
+future land use demands, five parameters, including both socio-eco-
+nomic and natural influences, are considered in different scenarios:
+annual population growth (APG), annual economic growth (AEG), an-
+nual technological innovation (ATI), annual temperature change (ATC)
+and annual precipitation change (APC). Moreover, these parameters are
+set to be slightly different in the four regions to reflect the social and
+ecological differences among these regions. The parameterization de-
+tails for each scenario in the different regions are shown in Table 6.
+As a potential developed country, China has become the fastest-
+growing economy worldwide over the past two decades. Although the
+economic growth has slowed in recent years (actual GDP growth fell
+from 10.4% in 2010 to 7.8% in 2012 to 6.9% in 2015), China is at-
+tempting to maintain its annual GDP growth at ∼6.5% in the near
+future, according to China’s thirteenth Five Year Plan. Therefore, the
+Chinese economy is undoubtedly going to continue to rise. However,
+the growth rate is unclear because the Chinese economic policies will
+introduce much uncertainty. In this study, four different economic de-
+velopment trajectories were designed for the different scenarios with
+different annual GDP growth rates over the next 40 years. Closely
+linked to the economic growth, the population growth is another im-
+portant driving force for land use changes. We established four popu-
+lation growth modes that approximately correspond to the economic
+trend for each scenario. Technological development is also considered
+an important driving factor in the scenario simulations because tech-
+nological development not only improves agricultural productivity but
+also reduces the land resource consumption necessary to support
+human welfare. Based on the current technological development in
+China, we assumed different future cases of technological innovation
+for the next 40 years in each scenario. Considering the regional dif-
+ferences in economic development and population growth, the annual
+GDP and population growth are set to be slightly different in the four
+sub regions according to historical socio-economic statistical data. The
+BD_Scenario tends to follow a moderate trend for economic and po-
+pulation development, e.g., the APG (∼0.6%) and AEG (∼7%) main-
+tain the current growth levels. The technological investment in agri-
+cultural productivity is set to a 10% annual growth rate to be consistent
+with the current state. In the FD_Scenario, the population growth and
+economic growth are assumed to experience sustained and rapid in-
+creases (∼0.9% and 8%, respectively) at the expense of many natural
+resources. A 15% growth rate is set for the agricultural productivity ATI
+to support the large population expansion and rapid economic devel-
+opment. In contrast to the FD_Scenario, the SD_Scenario has a relatively
+slow growth rate for both the population (∼0.5%) and the economy
+(∼5%), as it is designed to simulate the LUCC under conservative and
+environmentally friendly development. A relatively low ATI (5%) is
+considered in this scenario. The HD_Scenario is a more idealistic and
+sustainable development strategy that maintains a steady and inter-
+mediate AEG (∼7%) while protecting the natural environment with
+appropriate policies. The population in this scenario is assumed to have
+a relatively slow growth rate (0.5%) to reduce the impact on the natural
+environment. The ATI growth rate is set to be the highest (20%) among
+all the scenarios.
+4.2. Land use demand projection
+According to the four different scenarios described in the previous
+section, the system dynamics model was used to project the land use
+demands in the four sub-regions of mainland China under different
+development scenarios. A summary of the land use demands in each
+scenario over the next 40 years is shown in Fig. 13. As expected, the
+urban land area will increase consistently from 2010 to 2050 for all
+scenarios due to the population increase. In the FD_Scenario, the urban
+land has a dramatic growth to ∼400 thousand km 2 by 2050, almost
+twice that in 2010. The rapid expansion of urban land in this scenario is
+likely due to the fast urbanization process, which requires an increase in
+developed areas to accommodate the population and economic growth.
+Conversely, the lowest increase in urban land is associated with the
+SD_Scenario, which is designed to represent the conservative and en-
+vironmentally friendly development scenario. In the BD_Scenario and
+HD_Scenario, urban land moderately increases compared to the
+SD_Scenario and FD_Scenario. Unlike the urban land demands, the
+cultivated land variation tendencies are quite different among the four
+designed scenarios. In the SD_Scenario and HD_Scenario, cultivated
+land tends to decrease because human activities are likely to occupy
+cultivated land around the cities and convert it into urban land. How-
+ever, the population pressure in the FD_Scenario and BD_Scenario will
+cause an increase in food production demand and result in an increase
+in cultivated land. The projected forest land will decline in the
+BD_Scenario, FD_Scenario and the SD_Scenario. However, it will in-
+crease to a total area of 2.5 million km 2 in the HD_Scenario in 2050. The
+grassland area moderately increases in the HD_Scenario but remains
+relatively stable in the other three scenarios over the next 40 years.
+Table 6
+Parameterization of the socio-economic and natural factors in the four designed scenarios.
+Scenarios Factors NASA
+region
+NSHS
+region
+SH region TP region
+Baseline
+development
+scenario (BD)
+APG (%/a) 0.65 0.53 0.62 0.91
+AEG (%/a) 6.50 6.80 7.00 8.50
+ATI(%/a) 10 10 10 10
+APC (mm/a) 0.5721 0.8390 0.4770 2.9480
+ATC (°C/a) 0.0361 0.0314 0.0452 0.0451
+–
+Fast development
+scenario (FD)
+APG (%/a) 0.95 0.67 0.76 1.40
+AEG (%/a) 7.50 7.70 7.97 10.03
+ATI(%/a) 15 15 15 15
+APC (mm/a) 0.8358 1.2259 0.6970 4.3072
+ATC (°C/a) 0.0651 0.0567 0.0817 0.0681
+Slow development
+scenario (SD)
+APG (%/a) 0.50 0.34 0.47 0.85
+AEG (%/a) 5.50 4.90 5.20 7.24
+ATI(%/a) 5 5 5 5
+APC (mm/a) 0.0226 0.0331 0.0188 0.1162
+ATC (°C/a) 0.0035 0.0030 0.0044 0.0044
+Harmonious
+development
+scenario (HD)
+APG (%/a) 0.55 0.47 0.47 0.80
+AEG (%/a) 6.80 7.00 6.91 8.12
+ATI(%/a) 20 20 20 20
+APC(mm/a) 0.7910 1.1601 0.6596 4.0761
+ATC (°C/a) 0.0544 0.0474 0.0683 0.0681
+Note:.
+APG: Annual Precipitation Growth.
+AEG: Annual Economic Growth.
+ATI: Annual Technological Innovation.
+APC: Annual Precipitation Change.
+ATC: Annual Temperature Change.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+109
+These forest and grassland increases in the HD_Scenario are likely at-
+tributable to the trade-off between the ecological and socio-economic
+benefits. In the SD_Scenario, a large amount of grassland, forest and
+water will be converted into the unused land (e.g., sandy land, Gobi,
+salina, swampland, bare soil, bare rock, alpine desert and tundra). In
+the HD_Scenario and the FD_Scenario, however, the unused land tends
+to decrease after 2030, indicating that the unused land is used for de-
+velopment purposes in these two scenarios.
+4.3. Spatial simulation and analysis
+Based on the multiple land use demands projected in the previous
+section, we used the multiple CA model to simulate the spatial LUCC
+dynamics in the four designed scenarios from 2010 to 2050. The si-
+mulation results of the BD_Scenario, FD_Scenario, SD_Scenario and
+HD_Scenario in 2050 are shown in Fig. 14. The figure shows that the
+proposed multiple CA model can predict the spatial pattern of multiple
+land use types in 2050. Compared to the actual land use pattern in
+2010, we found that the urban land expansion in all scenarios is pri-
+marily located around current metropolitan areas and in the eastern
+coastal regions. Most of the grassland is distributed in the eastern
+Qinghai-Tibetan Plateau and northern Inner Mongolia, while the cul-
+tivated lands are predominantly located in the Sichuan Basin and in the
+plains, such as the North China Plain, Sanjiang Plain and Songnen Plain
+in the Heilongjiang Province. The forest is primarily concentrated in the
+southern low hilly areas and the northeast mountainous areas in China.
+Fig. 13. Projection of land use demands under different scenarios in mainland China from 2010 to 2050.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+110
+In addition, central northwestern China remains as unused land, in-
+cluding a large area of the Gobi Desert, bare soil, and alpine desert. To
+better highlight the spatial variability among the different scenarios,
+the percent change for each land use type at the local administrative
+level is calculated and shown in Fig. 15.
+The spatial details of multiple LUCCs among the different scenarios
+can be examined at a regional scale. We focus on three enlarged regions
+that are representative of the changes in different land use types in
+individual scenarios. The first region, located in the NHSH sub-region,
+is selected to illustrate the different cultivated land distributions among
+the four scenarios (Fig. 16). As shown in the figure, the land surface of
+this region is primarily covered by cultivated land, with a number of
+forest patches in the east and grasslands scattered in the west. Com-
+pared to the actual land use pattern in 2010, the most significant LUCC
+in the BD_Scenario involves the large-scale abandonment of cultivated
+land in the southwest corner, converted to grassland or unused land,
+likely due to soil degradation after excessive reclamation. This scenario
+is much more severe in the SD_Scenario due to the conservative de-
+velopment strategy. In contrast, much unused land converts to grass-
+land and cultivated land by 2050 in the FD_Scenario. This may be due
+to the more adequate rainfall and proper reclamation in the two sce-
+narios. Since FD_Scenario is marked by rapid population growth and a
+fast-growing economy, unused land reclamation is necessary to meet
+the large food production demand, leading to the wide expansion of
+cultivated land and grassland in this scenario. Compared to the
+economy-oriented FD_Scenario, the HD_Scenario is characterized by
+sustainable development. It describes a future land use pattern in which
+grassland restoration occurs on unused lands as efforts are made to
+preserve biodiversity and to improve the ecosystem quality.
+Fig. 17 shows the second enlarged region in the Yangtze River Delta,
+which is characterized by typical urban land development and expan-
+sion under different human and natural impacts. In the economic-or-
+iented FD_Scenario, a dramatic expansion of urban land and a corre-
+sponding decrease in cultivated land around major metropolitan areas
+occurs over the next 40 years. The same occurs at a slightly slower rate
+in the BD_Scenario. The rapid expansion of urban areas in these two
+scenarios likely results from the demand for infrastructure construction
+for socio-economic development and significant population increases.
+In contrast, the SD_Scenario has the smallest urban expansion by the
+end of 2050 due to lower population pressures and economic growth
+during the study period. The HD_Scenario maintains a similar grassland
+and forest land pattern compared to the SD_Scenario, even though the
+influences of human activities and the natural environment are dif-
+ferent between these two scenarios. In addition, a reasonable amount of
+urban land expansion occurs, which relieves the pressure of the in-
+creasing demand from socio-economic development. Moreover, China's
+largest freshwater lake (Poyang lake), located in the southwestern
+corner of the region, may experience a significant water area restora-
+tion in the HD_Scenario compared to the others. This is due to the
+combined effects of a precipitation increase and a series of environ-
+mental protection acts for this scenario.
+Fig. 18 shows another region located on the border between the
+Qinghai and Gansu provinces that illustrates the land use changes in a
+farming-pastoral ecotone in an ecologically sensitive region. Compared
+to the land use pattern in the baseline year of 2010, both forest and
+grasslands in this region experience significant changes in the four
+scenarios. The most significant change is the extensive expansion of
+forest and grassland in the HD_Scenario. This phenomenon is likely
+related to the humid climate conditions that provide sufficient water for
+vegetation growth and the environmental development strategy in this
+scenario. The grassland in the FD_Scenario slightly decreases and is
+converted to cultivated land, likely due to the influences of rapid po-
+pulation and economic growth. In contrast, the forest cover will ex-
+perience a modest reduction in the BD_Scenario, although forest tends
+to experience density increases in some places. Another significant
+change in the SD_Scenario is that the forest land sharply declines
+throughout the entire region and is converted to grassland. Moreover,
+the grassland in the northeast corner decreases significantly and be-
+comes unused land due to the lack of precipitation in the SD_Scenario.
+These results show that land use changes more prominently in an
+ecologically sensitive region.
+5. Discussion
+In this study, we discussed the FLUS model performance with the
+1000-m spatial data in China from 2010 to 2050. The simulated 2010
+land use pattern was compared to the actual land use pattern to mea-
+sure the model performance. The overall accuracy of the simulated land
+use pattern is 0.75 for all land use types, the Cohen’s Kappa coefficient
+is 0.67, and the Fom value is 19.62%. Moreover, we compared the
+Fig. 14. Simulated spatial pattern of land cover in the four designed scenarios from 2010 to 2050.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+111
+proposed method to the well-accepted Logistic-CA, CLUE-S and ANN-
+CA models by applying these three models to the Pearl River Delta
+(PRD) region in China for the land use simulation in 2010. The com-
+parison shows that the proposed method can simulate the land use
+dynamics in a more realistic manner due to the use of the self-adaptive
+inertia and competition mechanism. This mechanism allows the model
+to process complex local land use interactions and competition.
+Moreover, the improvement is attributed to the interactive coupling
+Fig. 15. Land cover change percentage at local admin-
+istrative level in different scenarios.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+112
+Fig. 16. Simulation of typical cultivated land patterns in different scenarios by 2050.
+Fig. 17. Simulation of typical urban land patterns in different scenarios by 2050.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+113
+mechanism, which enables the SD and CA models to evolve colla-
+boratively according to the comparison of tightly coupled and loosely
+coupled FLUS models. The sensitivity analysis indicates that the model
+is insensitive to the conversion cost variation if the conversion cost
+values are approximately correlated with the actual regional costs.
+Four scenarios in 2050 depicting different development strategies
+were designed to consider socio-economic developments (population,
+GDP, and technological innovation) and natural climate changes
+(temperature and precipitation). Based on the designed scenarios, we
+simulated the future land use dynamics of these scenarios, namely, the
+baseline development scenario (BD_Scenario), the fast development
+scenario (FD_Scenario), the slow development scenario (SD_Scenario)
+and the harmonious development scenario (HD_Scenario), by using the
+proposed FLUS method. The analysis of these simulated land use pat-
+terns yields the following conclusions: 1) Urban land tends to expand in
+all scenarios, especially in the fast development scenario (FD_Scenario),
+followed by the baseline development scenario (BD_Scenario). Urban
+expansion primarily occurs in the eastern coastal area. 2) Cultivated
+land significantly increases in the fast development scenario
+(FD_Scenario) and baseline development scenario (BD_Scenario) due to
+the population pressure. However, in the harmonious development
+scenario (HD_Scenario), cultivated land tends to decrease despite a
+slight increase in the population, subject to the technological im-
+provements. 3) In ecologically sensitive regions, the forest and grass-
+land areas will significantly decline if they are not well protected.
+Grassland and cultivated land will likely be converted into unused land
+due to over-reclamation and a low precipitation rate.
+In a future study, we will test the model’s applicability for higher-
+resolution simulations. Another limitation associated with this model is
+that patch developments cannot be simulated, thus causing simulation
+biases. We will improve this in the future by adding a patch develop-
+ment mechanism (Chen et al., 2016) to the FLUS model. Moreover, the
+FLUS model transition rules (referring primarily to the conversion cost
+and the well-trained ANN model) are assumed to be unchanged during
+the simulation process, while these rules may change over a long period
+(e.g., 50 or 100 years) in the real world. We will invest more effort in
+tackling this challenge in future works.
+6. Conclusions
+Land use simulation models are effective and reproducible tools to
+analyze both the causes and consequences of alternative future land-
+scape dynamics relative to socio-economic and natural environmental
+driving forces. Complex linkage and feedback structures need to be
+understood to simulate multiple land use conversions under uncertain
+future conditions. In this paper, we present an approach that integrates
+top-down system dynamics (SD) with bottom-up cellular automata (CA)
+for the simulation of multiple LUCC dynamics. To address the natural
+environmental effects, we propose a solution for simulating the spatial
+trajectories of multiple LUCCs under human-nature-included scenarios.
+The top-down SD model is used to represent the major impacts of socio-
+economic and climatic changes on land use demands. A self-adaptive
+inertia and competition mechanism is incorporated within the CA
+model to process the complex competitions and interactions among the
+different land use types. The top-down SD demand projection model
+and the bottom-up CA local allocation model are interactively coupled
+during the simulation.
+The proposed model was applied to the LUCC simulations in China
+from 2000 to 2010 to test the model’s applicability and compare it with
+other studies. The FLUS model obtained the highest simulation accu-
+racy and generated a more realistic land use pattern. The simulation
+results in mainland China driven by four future scenarios demonstrate
+that the FLUS model can be effectively used to identify hot-spot areas
+and analyze both the causes and consequences of future land use dy-
+namics, which can help researchers and decision makers draft appro-
+priate policies to better adapt to the rapid change of the natural en-
+vironment under the background of global climate warming.
+In summary, the proposed model is applicable for exploring the
+Fig. 18. Simulation of typical farming-pastoral ecotones in different scenarios by 2050.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+114
+impacts of climate change and human activities on future land use
+dynamics. The future land use developments in China will need to en-
+dure the effects from both climate change and economic/population
+growth. Effective measures should be used to address these effects to
+sustainably develop China in the future. Therefore, this study shows
+that the GeoSOS-FLUS software (available for download at http://www.
+geosimulation.cn/flus.html) can conveniently explore the possible
+patterns of multiple land use changes under the influence of both
+human and natural effects.
+Acknowledgments
+This research was funded by the National Key R&D Program of
+China (No. 2017YFA0604402 and 2017YFA0604404), the Key National
+Natural Science Foundation of China (Grant No. 41531176), and the
+National Natural Science Foundation of China (Grant No. 41671398).
+References
+Aerts, J. C., & Heuvelink, G. B. (2002). Using simulated annealing for resource allocation.
+International Journal of Geographical Information Science, 16, 571–587.
+Bakker, M. M., Govers, G., Kosmas, C., Vanacker, V., Oost, K. V., & Rounsevell, M. (2005).
+Soil erosion as a driver of land-use change. Agriculture Ecosystems& Environment, 105,
+467–481.
+Batty, M., Couclelis, H., & Eichen, M. (1997). Urban systems as cellular automata.
+Environment and Planning B: Planning and Design, 24, 159–164.
+Berling-Wolff, S., & Wu, J. (2004). Modeling urban landscape dynamics: A review.
+Ecological Research, 19, 119–129.
+Bloom, D. E. (2011). 7 Billion and counting. Science, 333, 562–569.
+Chapin, F. S., III, Zavaleta, E. S., Eviner, V. T., Naylor, R. L., Vitousek, P. M., Reynolds, H.
+L., ... Hobbie, S. E. (2000). Consequences of changing biodiversity. Nature, 405,
+234–242.
+Chen, Y., Li, X., Wang, S., & Liu, X. (2012). Defining agents' behaviour based on urban
+economic theory to simulate complex urban residential dynamics. International
+Journal of Geographical Information Science, 26, 1155–1172.
+Chen, M., Liu, W., & Tao, X. (2013). Evolution and assessment on China's urbanization
+1960–2010: under-urbanization or over-urbanization? Habitat International, 38,
+25–33.
+Chen, Y., Li, X., Liu, X., & Ai, B. (2014). Modeling urban land-use dynamics in a fast
+developing city using the modified logistic cellular automaton with a patch-based
+simulation strategy. International Journal of Geographical Information Science, 28(2),
+234–255.
+Chen, Y., Li, X., Liu, X., Ai, B., & Li, S. (2016). Capturing the varying effects of driving
+forces over time for the simulation of urban growth by using survival analysis and
+cellular automata. Landscape &Urban Planning, 152, 59–71.
+Clarke, K. C., & Gaydos, L. J. (1998). Loose-coupling a cellular automaton model and GIS:
+Long-term urban growth prediction for San Francisco and Washington/Baltimore.
+International Journal of Geographical Information Science, 12, 699–714.
+Costanza, R., & Ruth, M. (1998). Using dynamic modeling to scope environmental pro-
+blems and build consensus. Environmental Management, 22, 183–195.
+Coyle, R. G. (1997). System dynamics modelling: A practical approach. Journal of the
+Operational Research Society, 48, 544.
+De Koning, G. H., Verburg, P. H., Veldkamp, A., & Fresco, L. O. (1999). Multi-scale
+modelling of land use change dynamics in Ecuador. Agricultural Systems, 61, 77–93.
+Dietzel, C., & Clarke, K. C. (2007). Toward optimal calibration of the SLEUTH land use
+change model. Transactions in GIS, 11, 29–45.
+Estoque, R. C., & Murayama, Y. (2012a). Examining the potential impact of land use/
+cover changes on the ecosystem services of Baguio city, the Philippines: A scenario-
+based analysis. Applied Geography, 35(1–2), 316–326.
+Estoque, R. C., & Murayama, Y. (2012b). Introducing new measures of accuracy for land-
+use/cover change modeling. Tsukuba Geoenvironmental Sciences, 8, 3–7.
+Foley, J. A., DeFries, R., Asner, G. P., Barford, C., Bonan, G., Carpenter, S. R., ... Gibbs, H.
+K. (2005). Global consequences of land use. Science, 309, 570–574.
+Fu, B., Liu, G., Chen, L., Ma, K., & Li, J. (2001). Scheme of ecological regionalization in
+China. Acta Ecologica Sinica, 21(1), 1–6 [In Chinese].
+Geist, H. J., & Lambin, E. F. (2004). Dynamic causal patterns of desertification. Bioscience,
+54, 817–829.
+Gustafson, E. J., Shifley, S. R., Mladenoff, D. J., Nimerfro, K. K., & He, H. S. (2000).
+Spatial simulation of forest succession and timber harvesting using LANDIS. Canadian
+Journal of Forest Research, 30, 32–43.
+Haghani, A., Lee, S. Y., & Byun, J. H. (2003). A system dynamics approach to land use/
+transportation system performance modeling part I: Methodology. Journal of
+Advanced Transportation, 37, 1–41.
+Hanley, J. A., & McNeil, B. J. (1982). The meaning and use of the area under a receiver
+operating characteristic (ROC) curve. Radiology, 143, 29–36.
+Hansen, H. S. (2010). Modelling the future coastal zone urban development as implied by
+the IPCC SRES and assessing the impact from sea level rise. Landscape and Urban
+Planning, 98, 141–149.
+Hay, J., & Mimura, N. (2006). Supporting climate change vulnerability and adaptation
+assessments in the Asia-Pacific region: An example of sustainability science.
+Sustainability Science, 1, 23–35.
+He, C., Shi, P., Chen, J., Li, X., Pan, Y., Li, J., ... Li, J. (2005). Developing land use scenario
+dynamics model by the integration of system dynamics model and cellular automata
+model. Science in China Series D: Earth Sciences, 48, 1979–1989.
+Heistermann, M., Müller, C., & Ronneberger, K. (2006). Land in sight? Achievements,
+deficits and potentials of continental to global scale land-use modeling. Agriculture,
+Ecosystems& Environment, 114, 141–158.
+Huang, K., Liu, X., Li, X., Liang, J., & He, S. (2013). An improved artificial immune system
+for seeking the Pareto front of land-use allocation problem in large areas. International
+Journal of Geographical Information Science, 27, 922–946.
+Huang, Q., He, C., Liu, Z., & Shi, P. (2014). Modeling the impacts of drying trend sce-
+narios on land systems in northern China using an integrated SD and CA model.
+Science China Earth Sciences, 57, 839–854.
+Kalnay, E., & Cai, M. (2003). Impact of urbanization and land-use change on climate.
+Nature, 423, 528–531.
+Kline, J. D., Moses, A., Lettman, G. J., & Azuma, D. L. (2007). Modeling forest and range
+land development in rural locations: With examples from eastern Oregon. Landscape
+and Urban Planning, 80, 320–332.
+Kok, K., & Winograd, M. (2002). Modelling land-use change for Central America: With
+special reference to the impact of hurricane Mitch. Ecological Modelling, 149, 53–69.
+Lambin, E. F., Geist, H. J., & Lepers, E. (2003). Dynamics of land-use and land-cover
+change in tropical regions. Annual Review of Environment and Resources, 28, 205–241.
+Letourneau, A., Verburg, P. H., & Stehfest, E. (2012). A land-use systems approach to
+represent land-use dynamics at continental and global scales. Environmental
+Modelling &Software, 33, 61–79.
+Li, X., & Yeh, A. G. (2000). Modelling sustainable urban development by the integration
+of constrained cellular automata and GIS. International Journal of Geographical
+Information Science, 14, 131–152.
+Li, X., & Yeh, A. G. (2002). Neural-network-based cellular automata for simulating
+multiple land use changes using GIS. International Journal of Geographical Information
+Science, 16, 323–343.
+Li, X., Chen, Y., Liu, X., Li, D., & He, J. (2011). Concepts, methodologies: And tools of an
+integrated geographical simulation and optimization system. International Journal of
+Geographical Information Science, 25, 633–655.
+Li, X., Lin, J., Chen, Y., Liu, X., & Ai, B. (2013). Calibrating cellular automata based on
+landscape metrics by using genetic algorithms. International Journal of Geographical
+Information Science, 27, 594–613.
+Li, X., Guangzhao, C., Xiaoping, L., & Xun, L. (2017). Wang Shaojian A new global land-
+use and land-cover change product at a 1-km resolution for 2010–2100 based on
+human-environment interactions. Annals of the Association of American Geographers,
+107(5), 1040–1059.
+Liu, X., Li, X., Liu, L., He, J., & Ai, B. (2008). A bottom-up approach to discover transition
+rules of cellular automata using ant intelligence. International Journal of Geographical
+Information Science, 22, 1247–1269.
+Liu, X., Li, X., Shi, X., Wu, S., & Liu, T. (2008). Simulating complex urban development
+using kernel-based non-linear cellular automata. Ecological Modelling, 211, 169–181.
+Liu, X., Li, X., Shi, X., Zhang, X., & Chen, Y. (2010). Simulating land-use dynamics under
+planning policies by integrating artificial immune systems with cellular automata.
+International Journal of Geographical Information Science, 24, 783–802.
+Liu, X., Ma, L., Li, X., Ai, B., Li, S., & He, Z. (2014). Simulating urban growth by in-
+tegrating landscape expansion index (LEI) and cellular automata. International
+Journal of Geographical Information Science, 28, 148–163.
+Liu, X., Hu, G., Ai, B., Li, X., Tian, G., Chen, Y., & Li, S. (2017). Simulating urban dynamics
+in China using a gradient cellular automata model based on S-shaped curve evolution
+characteristics. International Journal of Geographical Information Science, 0, 1–29.
+Matson, P. A., Parton, W. J., Power, A. G., & Swift, M. J. (1997). Agricultural in-
+tensification and ecosystem properties. Science, 277, 504–509.
+Mendelsohn, R., & Dinar, A. (1999). Climate change, agriculture, and developing coun-
+tries: Does adaptation matter? The World Bank Research Observer, 14, 277–293.
+Okin, G. S., Murray, B., & Schlesinger, W. H. (2001). Degradation of sandy arid shrubland
+environments: Observations, process modelling: And management implications.
+Journal of Arid Environments, 47, 123–144.
+Openshaw, S. (1998). Neural network, genetic, and fuzzy logic models of spatial inter-
+action. Environment and Planning A, 30, 1857–1872.
+Pielke, R. A., Marland, G., Betts, R. A., Chase, T. N., Eastman, J. L., Niles, J. O., &
+Running, S. W. (2002). The influence of land-use change and landscape dynamics on
+the climate system: Relevance to climate-change policy beyond the radiative effect of
+greenhouse gases. Philosophical Transactions of the Royal Society of London A:
+Mathematical Physical and Engineering Sciences, 360, 1705–1719.
+Pijanowski, B. C., Alexandridis, K. T., & Mueller, D. (2006). Modelling urbanization
+patterns in two diverse regions of the world. Journal of Land Use Science, 1, 83–108.
+Pontius, R. G., Jr, & Millones, M. (2011). Death to Kappa: Birth of quantity disagreement
+and allocation disagreement for accuracy assessment. International Journal of Remote
+Sensing, 32, 4407–4429.
+Pontius, R. G., Boersma, W., Castella, J., Clarke, K., de Nijs, T., Dietzel, C., ... Verburg, P.
+H. (2008). Comparing the input, output, and validation maps for several models of
+land change. The Annals of Regional Science, 42, 11–137.
+Sala, O. E., Chapin, F. S., Armesto, J. J., Berlow, E., Bloomfield, J., Dirzo, R., ... Kinzig, A.
+(2000). Global biodiversity scenarios for the year 2100. Science, 287, 1770–1774.
+Schaldach, R., Alcamo, J., Koch, J., Kölking, C., Lapola, D. M., Schüngel, J., ... Priess, J. A.
+(2011). An integrated approach to modelling land-use change on continental and
+global scales. Environmental Modelling& Software, 26, 1041–1051.
+Schulp, C. J., Nabuurs, G., & Verburg, P. H. (2008). Future carbon sequestration in
+Europe—effects of land use change. Agriculture Ecosystems& Environment, 127,
+251–264.
+Sohl, T. L., Sayler, K. L., Drummond, M. A., & Loveland, T. R. (2007). The FORE-SCE
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+115
+model: A practical approach for projecting land cover change using scenario-based
+modeling. Journal of Land Use Science, 2, 103–126.
+Sohl, T. L., Sleeter, B. M., Sayler, K. L., Bouchard, M. A., Reker, R. R., Bennett, S. L., ...
+Zhu, Z. (2012). Spatially explicit land-use and land-cover scenarios for the Great
+Plains of the United States. Agriculture, Ecosystems& Environment, 153, 1–15.
+Syphard, A. D., Clarke, K. C., & Franklin, J. (2007). Simulating fire frequency and urban
+growth in southern California coastal shrublands, USA. Landscape Ecology, 22,
+431–445.
+Tangen, K. (1999). The climate change negotiations: Buenos Aires and beyond. Global
+Environmental Change, 9, 175–178.
+Tilman, D., Fargione, J., Wolff, B., D'Antonio, C., Dobson, A., Howarth, R., ...
+Swackhamer, D. (2001). Forecasting agriculturally driven global environmental
+change. Science, 292, 281–284.
+Van Asselen, S., & Verburg, P. H. (2013). Land cover change or land-use intensification:
+Simulating land system change with a global-scale land change model. Global Change
+Biology, 19, 3648–3667.
+Verburg, P. H., & Overmars, K. P. (2009). Combining top-down and bottom-up dynamics
+in land use modeling: Exploring the future of abandoned farmlands in Europe with
+the Dyna-CLUE model. Landscape Ecology, 24, 1167–1181.
+Verburg, P. H., Soepboer, W., Veldkamp, A., Limpiada, R., Espaldon, V., & Mastura, S. S.
+(2002). Modeling the spatial dynamics of regional land use: The CLUE-S model.
+Environmental Management, 30, 391–405.
+Verburg, P. H., Schot, P. P., Dijst, M. J., & Veldkamp, A. (2004). Land use change mod-
+elling: current practice and research priorities. GeoJournal, 61, 309–324.
+Verburg, P. H., Schulp, C. J. E., Witte, N., & Veldkamp, A. (2006). Downscaling of land
+use change scenarios to assess the dynamics of European landscapes. Agriculture
+Ecosystems& Environment, 114, 39–56.
+Vitousek, P. M., Mooney, H. A., Lubchenco, J., & Melillo, J. M. (1997). Human dom-
+ination of Earth's ecosystems. Science, 277, 494–499.
+Wang, F. (1994). The use of artificial neural networks in a geographical information
+system for agricultural land-suitability assessment. Environment and Planning A, 26,
+265–284.
+Ward, D. P., Murray, A. T., & Phinn, S. R. (2000). A stochastically constrained cellular
+model of urban growth. Computers Environment and Urban Systems, 24, 539–558.
+White, R., Engelen, G., & Uljee, I. (1997). The use of constrained cellular automata for
+high-resolution modelling of urban land-use dynamics. Environment and Planning B:
+Planning and Design, 24, 323–343.
+Wolf, J., Bindraban, P. S., Luijten, J. C., & Vleeshouwers, L. M. (2003). Exploratory study
+on the land area required for global food supply and the potential global production
+of bioenergy. Agricultural Systems, 76, 841–861.
+Wu, F. (1999). GIS-based simulation as an exploratory analysis for space-time processes.
+Journal of Geographical Systems, 1, 199–218.
+Wu, F. (2002). Calibration of stochastic cellular automata: The application to rural-urban
+land conversions. International Journal of Geographical Information Science, 16(8),
+795–818.
+Xiang, W., & Clarke, K. C. (2016). The use of scenarios in land-use planning. Environment
+and Planning B: Planning and Design, 30(6), 885–909.
+Yao, Y., Li, X., Liu, X., Liu, P., Liang, Z., Zhang, J., Mai, K., ... (2016). Sensing spatial
+distribution of urban land use by integrating points-of-interest and Google Word2Vec
+model. International Journal of Geographical Information Science, 1–24.
+X. Liu et al. Landscape and Urban Planning 168 (2017) 94–116
+116
