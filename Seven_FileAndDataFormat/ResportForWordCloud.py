@@ -37,8 +37,8 @@ def read_from_file3(filename):
 
 
 def generate_wordcloud(text, filename):
-    mk = im1("World.jpg")
-    w = wordcloud.WordCloud(width=1100, height=700, font_path="SIMLI.TTF", min_font_size=1,
+    mk = im1("spider.jpg")
+    w = wordcloud.WordCloud(width=1000, height=800, font_path="SIMLI.TTF", mask=mk,  min_font_size=1,
                             background_color="black")
     w.generate(text)
     store_file = filename.split('.')[0] + time.strftime("_%Y%m%d_%H%M%S", time.localtime()) + ".png"
@@ -47,6 +47,6 @@ def generate_wordcloud(text, filename):
 
 
 if __name__ == '__main__':
-    file_name = "2017LUP-FLUS.txt"
+    file_name = "ISPRS.txt"
     txt = read_from_file3(file_name)
     generate_wordcloud(txt, file_name)
